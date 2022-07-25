@@ -1,0 +1,53 @@
+/* Nav.Item */
+.nav-item {
+    background-color: #fffded;
+    border-color: #fffded;
+}
+
+.nav-item:hover {
+    background-color: #fffded;
+    border-color: #fffded;
+}
+
+.nav-item:focus {
+    background-color: #fffded;
+}
+
+.nav-item > .nav-link:focus {
+    background-color: #fffded;
+    border-color: #fffded;
+    color: #FB8875;
+}
+
+
+/* Nav.Link */
+.nav-link {
+    color: #0C594D;
+    font-weight: bold;
+}
+
+.nav-link:hover {
+    color: #FB8875;
+}
+
+
+#layout-button {
+    width: 125px;
+    text-align: center;
+}
+
+/* Layout Button Link */
+#layout-button-link {
+    color: white;
+    border: solid;
+    border-color: #fffded;
+    background-color: orange;
+}
+
+#layout-button-link:focus {
+    background-color: #FB8875;
+}
+
+#layout-button-link:active {
+    background-color: #FB8875;
+}
