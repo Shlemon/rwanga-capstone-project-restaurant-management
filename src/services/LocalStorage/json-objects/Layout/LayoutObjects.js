@@ -6,6 +6,7 @@ export default function LayoutObjects() {
         events: {title: 'Events', route: '/events', eventkey: 'link-events'},
         reserve: {title: 'Reserve', route: '/reserve', eventkey: 'link-reserve'},
         contact: {title: 'Contact', route: '/contact', eventkey: 'link-contact'},
+        login: {title: 'Login', route: '/login' , eventkey: 'link-login'},
     }
     );
 }

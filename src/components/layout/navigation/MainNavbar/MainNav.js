@@ -11,7 +11,7 @@ export default function MainNav() {
         <>
         <Container fluid style={{background: "#fffded"}}>
             <Navbar expand="lg" className='mx-5 gap-5'>
-                <Navbar.Brand className="fs-2 justify-content-center">Lava Rest</Navbar.Brand>
+                <Navbar.Brand className="fs-2 fw-bold justify-content-center">Lava Rest</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav pills defaultActiveKey="/" className="gap-5 mx-5 justify-content-center" style={{width: "100%"}}>
@@ -21,6 +21,7 @@ export default function MainNav() {
                         <LayoutItem data={layoutObjects.reserve} />
                         <LayoutItem data={layoutObjects.contact} />
                     </Nav>
+                    <LayoutItem data={layoutObjects.login} />
                 </Navbar.Collapse>
             </Navbar>
         </Container>

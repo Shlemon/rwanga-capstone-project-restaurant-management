@@ -4,7 +4,7 @@ import Events from '../../../../pages/Events/Events';
 import Reserve from '../../../../pages/Reserve/Reserve';
 import Contact from '../../../../pages/Contact/Contact';
 import NoPage from '../../../../pages/NoPage/NoPage';
-
+import LoginForm from '../../../../views/Login/LoginForm/LoginForm';
 
 const RoutesObject = () => {
     const routes_object = {
@@ -13,6 +13,7 @@ const RoutesObject = () => {
         events: Events(),
         reserve: Reserve(),
         contact: Contact(),
+        login: LoginForm(),
         no_page: NoPage()
     };
     return routes_object;

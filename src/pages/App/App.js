@@ -8,6 +8,7 @@ import MainNav from '../../components/layout/navigation/MainNavbar/MainNav';
 
 import RoutesObject from '../../services/LocalStorage/route-objects/PageRoutes/RoutesObject';
 import MenuRoutes from '../../services/LocalStorage/route-objects/MenuRoutes/MenuRoutes';
+import MainFooter from '../../components/layout/footer/MainFooter/MainFooter';
 
 function App() {
   const routes = RoutesObject();
@@ -18,7 +19,6 @@ function App() {
         <Route path='/' element={<MainNav />} >
           <Route index element={routes.home} />
           <Route path='/mainmenu' element={routes.main_menu} >
-              <Route index element={routes.dinner} />
               <Route path='dinner' element={menuRoutes.dinner} />
               <Route path='lunch' element={menuRoutes.lunch} />
               <Route path='brunch' element={menuRoutes.brunch} />
@@ -27,9 +27,11 @@ function App() {
           <Route path='/events' element={routes.events} />
           <Route path='/reserve' element={routes.reserve} />
           <Route path='/contact' element={routes.contact} />
+          <Route path='/login' element={routes.login} />
           <Route path='*' element={routes.no_page} />
-      </Route>
+        </Route>
       </Routes>
+      <MainFooter />
     </BrowserRouter>
   );
 }

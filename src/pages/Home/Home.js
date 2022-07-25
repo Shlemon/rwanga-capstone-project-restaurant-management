@@ -44,7 +44,7 @@ const FirstCardCombo = (props) =>
     );
 }
 
-const SecondCarCombo = (props) => 
+const SecondCardCombo = (props) => 
 {
     return(
         <>
@@ -80,6 +80,9 @@ const Home = () => {
             </Row>
             <Row className='text-center'>
                 <FirstCardCombo />
+            </Row>
+            <Row className='text-center'>
+                <SecondCardCombo />
             </Row>
         </Container>
         </>
