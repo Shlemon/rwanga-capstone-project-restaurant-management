@@ -47,3 +47,22 @@
 .btn:active {
     background-color: rgb(17, 62, 17);;
 }
+
+@media screen and (max-width: 816px) {
+    #h-element {
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-width: 635px) {
+    #h-element {
+        font-size: 10px;
+        font-weight: bold;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        place-items: center;
+        align-content: center;
+    }
+}
