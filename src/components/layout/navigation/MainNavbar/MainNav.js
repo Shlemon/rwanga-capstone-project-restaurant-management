@@ -17,7 +17,6 @@ export default function MainNav() {
                     <Nav pills defaultActiveKey="/" className="gap-5 mx-5 justify-content-center" style={{width: "100%"}}>
                         <LayoutItem data={layoutObjects.home} />
                         <LayoutItem data={layoutObjects.main_menu} />
-                        <LayoutItem data={layoutObjects.events} />
                         <LayoutItem data={layoutObjects.reserve} />
                         <LayoutItem data={layoutObjects.contact} />
                     </Nav>

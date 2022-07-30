@@ -1,13 +1,22 @@
-import { Container, Row, Col } from 'react-bootstrap';
-
+import './MenuDesignOne.css';
+import { Container, Row, Col, Card } from 'react-bootstrap';
 
 function ItemAdd(props)
 {
     return(
         <>
         <Col lg={6} className='mb-3'>
-            <h6 className='fs-5 fw-bold'>{props.item.name}</h6>
-            <h6 id='item-description'>{props.item.ingredients}</h6>
+            <Card className='text-start' id='card-root'>
+                <Row>
+                    <Col md={4}><img src={props.item.image} className='img-fluid rounded-start h-100 w-100' alt='menuImg'/></Col>
+                    <Col md={8}>
+                        <Card.Body>
+                            <Card.Title id='card-title'>{props.item.name}</Card.Title>
+                            <Card.Text id='card-text'>{props.item.ingredients}.</Card.Text>
+                        </Card.Body>
+                    </Col>
+                </Row>
+            </Card>
         </Col>
         </>
     );
@@ -22,7 +31,7 @@ export function DefaultMenuItemLayout(props)
                 {props.item.items.map(function(nextItem, nextItemIndex)
                 {
                     return(
-                        <ItemAdd item={nextItem} />
+                        <ItemAdd key={nextItem} item={nextItem} />
                     );
                 }
                 )}
@@ -33,10 +42,11 @@ export function DefaultMenuItemLayout(props)
 
 export function MenuDesignOne(props) 
 {
+    const currentMenu = props.menuType;
     return(
         <Container fluid style={{backgroundColor: '#FEFDED', color: '#0C594D', fontWeight: 'bold'}}>
             {
-                props.currentMenu.map(function(menuItem, menuItemIndex)
+                currentMenu.map(function(menuItem, menuItemIndex)
                 {
                     return <DefaultMenuItemLayout item={menuItem} />
                 }

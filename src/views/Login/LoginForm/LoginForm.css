@@ -1,0 +1,22 @@
+#login-button {
+    color: white;
+    background-color: blue;
+    text-decoration: none;
+    border: 1px;
+    border-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-width: 25%;
+    max-width: 25%;
+    height: 40px;
+}
+
+#login-button:hover {
+    box-shadow: 10px 10px rgba(0, 0, 255, 0.635);
+    text-shadow: 0.5px 0.5px;
+    text-transform: capitalize;
+    cursor: pointer;
+    transition: 0.15s ease-in-out;
+}

@@ -1,11 +1,9 @@
-import { DinnerObjects } from '../../../../services/LocalStorage/json-objects/Menu/DinnerObjects';
 import { MenuDesignOne } from "../MenuDesignOne/MenuDesignOne"; 
-
+import { DinnerObjects } from '../../../../services/LocalStorage/json-objects/Menu/DinnerObjects';
 
 export default function Dinner()
 {
-    const dinnerMenu = DinnerObjects();
     return(
-        <MenuDesignOne currentMenu={dinnerMenu} />
+        <MenuDesignOne menuType={DinnerObjects()} />
     );
 }

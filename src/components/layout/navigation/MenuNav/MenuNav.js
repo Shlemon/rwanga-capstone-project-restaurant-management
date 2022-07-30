@@ -10,7 +10,7 @@ export default function MenuNav()
     return(
         <Container>
             <Navbar className='mx-5'>
-                <Nav pills defaultActiveKey='/dinner' className='gap-4 justify-content-center' style={{width: '100%'}}>
+                <Nav pills defaultActiveKey='dinner' className='gap-4 justify-content-center' style={{width: '100%'}}>
                     <LayoutButton data={menuObjects.dinner} id='layout-1'/>
                     <LayoutButton data={menuObjects.lunch} />
                     <LayoutButton data={menuObjects.brunch} />
