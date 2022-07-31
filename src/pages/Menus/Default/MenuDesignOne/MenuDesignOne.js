@@ -8,11 +8,13 @@ function ItemAdd(props)
         <Col lg={6} className='mb-3'>
             <Card className='text-start' id='card-root'>
                 <Row>
-                    <Col md={4}><img src={props.item.image} className='img-fluid rounded-start h-100 w-100' alt='menuImg'/></Col>
+                    <Col md={4}><img src={props.item.image} className='img-fluid rounded-start' alt='menuImg' id='item-img'/></Col>
                     <Col md={8}>
                         <Card.Body>
-                            <Card.Title id='card-title'>{props.item.name}</Card.Title>
-                            <Card.Text id='card-text'>{props.item.ingredients}.</Card.Text>
+                            <Col md={12} id='card-title'>{props.item.name}</Col>
+                            <Col md={12} id='card-text'>{props.item.ingredients}</Col>
+                            {/* <Card.Title id='card-title'>{props.item.name}</Card.Title>
+                            <Card.Text id='card-text'>{props.item.ingredients}.</Card.Text> */}
                         </Card.Body>
                     </Col>
                 </Row>

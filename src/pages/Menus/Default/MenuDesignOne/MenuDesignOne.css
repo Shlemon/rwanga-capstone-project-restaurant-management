@@ -12,3 +12,19 @@
     font-size: 15px;
     font-weight: normal;
 }
+
+
+@media screen and (max-width: 471px){
+    #card-title {
+        font-size: 15px;
+    }
+    #card-text {
+        font-size: 13px;
+    }
+}
+
+#item-img {
+    width: 100%; /* You can set the dimensions to whatever you want */
+    height: 100px;
+    object-fit: cover;
+}
