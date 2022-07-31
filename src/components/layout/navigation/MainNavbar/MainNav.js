@@ -10,11 +10,11 @@ export default function MainNav() {
     return(
         <>
         <Container fluid style={{background: "#fffded"}}>
-            <Navbar expand="lg" className='mx-5 gap-5'>
+            <Navbar expand="lg" className='mx-5'>
                 <Navbar.Brand className="fs-2 fw-bold justify-content-center">Lava Rest</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
-                    <Nav pills defaultActiveKey="/" className="gap-5 mx-5 justify-content-center" style={{width: "100%"}}>
+                    <Nav pills defaultActiveKey="/" className="gap-5 mx-5 justify-content-center align-items-center" style={{width: "100%"}}>
                         <LayoutItem data={layoutObjects.home} />
                         <LayoutItem data={layoutObjects.main_menu} />
                         <LayoutItem data={layoutObjects.reserve} />

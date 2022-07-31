@@ -5,14 +5,14 @@ function ItemAdd(props)
 {
     return(
         <>
-        <Col lg={6} className='mb-3'>
+        <Col sm={6} className='mb-3'>
             <Card className='text-start' id='card-root'>
                 <Row>
-                    <Col md={4}><img src={props.item.image} className='img-fluid rounded-start' alt='menuImg' id='item-img'/></Col>
-                    <Col md={8}>
+                    <Col sm={4}><img src={props.item.image} className='img-fluid rounded-start' alt='menuImg' id='item-img'/></Col>
+                    <Col sm={8}>
                         <Card.Body>
-                            <Col md={12} id='card-title'>{props.item.name}</Col>
-                            <Col md={12} id='card-text'>{props.item.ingredients}</Col>
+                            <Col sm={12} id='card-title'>{props.item.name}</Col>
+                            <Col sm={12} id='card-text'>{props.item.ingredients}</Col>
                             {/* <Card.Title id='card-title'>{props.item.name}</Card.Title>
                             <Card.Text id='card-text'>{props.item.ingredients}.</Card.Text> */}
                         </Card.Body>
@@ -27,9 +27,9 @@ function ItemAdd(props)
 export function DefaultMenuItemLayout(props)
 {
     return(
-        <Container className='text-center p-5'>
+        <Row className='text-center'>
             <Row><Col className='fs-1 mb-4 mt-5' style={{color: '#95BDB2'}}>{props.item.name}</Col></Row>
-            <Row className='mx-5 px-5 mt-5'>
+            <Row className='mt-5'>
                 {props.item.items.map(function(nextItem, nextItemIndex)
                 {
                     return(
@@ -38,7 +38,7 @@ export function DefaultMenuItemLayout(props)
                 }
                 )}
             </Row>
-        </Container>
+        </Row>
     )
 }
 
