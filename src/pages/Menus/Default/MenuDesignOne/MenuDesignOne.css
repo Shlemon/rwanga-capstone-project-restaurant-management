@@ -28,3 +28,14 @@
     height: 100px;
     object-fit: cover;
 }
+
+
+#main-items-container {
+    margin: 0px 250px 0px 250px;
+}
+
+@media screen and (max-width: 1210px) {
+    #main-items-container {
+        margin: 0px 0px 0px 0px;
+    }
+}

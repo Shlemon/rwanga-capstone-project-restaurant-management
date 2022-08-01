@@ -34,6 +34,20 @@
 #layout-button {
     width: 125px;
     text-align: center;
+    font-size: 15px;
+}
+
+@media screen and (max-width: 400px) {
+    #layout-button {
+        width: 72px;
+        font-size: 11px;
+    }
+}
+
+@media screen and (max-width: 300px){
+    #layout-button {
+        font-size: 9px;
+    }
 }
 
 /* Layout Button Link */
