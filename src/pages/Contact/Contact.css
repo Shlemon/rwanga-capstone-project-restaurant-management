@@ -56,7 +56,7 @@
 
 @media screen and (max-width: 635px) {
     #h-element {
-        font-size: 10px;
+        font-size: 14px;
         font-weight: bold;
         display: flex;
         justify-content: center;

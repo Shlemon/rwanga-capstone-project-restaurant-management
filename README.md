@@ -4,6 +4,6 @@ This project aims to digitalize restaurant menu and management of the business a
 
 ## Features
 
-- State Management with RTK
+- State Management with Redux ToolKit
 - Firebase
 -

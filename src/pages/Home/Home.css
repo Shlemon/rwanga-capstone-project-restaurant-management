@@ -5,6 +5,7 @@
 
 #main-img {
     color: white;
+    text-align: center;
     font-size: 100px;
     display: -webkit-box;
     display: -webkit-flex;

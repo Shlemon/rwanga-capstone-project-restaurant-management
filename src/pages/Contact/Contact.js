@@ -11,8 +11,7 @@ const HeaderRow = () =>
     return(
         <>
             <Col lg={12} className='mt-5 mb-4 fw-bold' id='h-element-header'><h1>CONTACT US</h1></Col>
-            <Col lg={12}><h5 id='h-element'>Use the form below to send us a message, and we'll get back to you</h5></Col>
-            <Col lg={12}><h5 id='h-element'>as soon as possible</h5></Col>
+            <Col lg={12}><h5 id='h-element'>Use the form below to send us a message, and we'll get back to you as soon as possible</h5></Col>
         </>
     );
 }

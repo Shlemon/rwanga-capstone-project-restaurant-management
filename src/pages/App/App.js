@@ -26,7 +26,6 @@ function App() {
               <Route path='brunch' element={menuRoutes.brunch} />
               <Route path='drinks' element={menuRoutes.drinks} />
           </Route>
-          <Route path='/reserve' element={routes.reserve} />
           <Route path='/contact' element={routes.contact} />
           <Route path='/login' element={routes.login} />
           <Route path='/dashboard' element={LoginPage()} />

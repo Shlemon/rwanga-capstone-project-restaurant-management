@@ -7,7 +7,7 @@ export function ContactForm()
     return(
         <Container>
             <Form className='d-flex justify-content-center'>
-                <Form.Group className='w-75' id='main-form'>
+                <Form.Group className='w-100' id='main-form'>
                     <Form.Control placeholder='Name' aria-label='Username' className='mb-3'/>
                     <Form.Control placeholder='Email' type='email' className='mb-3'/>
                     <Form.Control placeholder='Phone Number' type='text' className='mb-3'/>

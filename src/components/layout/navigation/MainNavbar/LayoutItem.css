@@ -37,7 +37,7 @@
     font-size: 15px;
 }
 
-@media screen and (max-width: 400px) {
+/* @media screen and (max-width: 400px) {
     #layout-button {
         width: 72px;
         font-size: 11px;
@@ -48,7 +48,7 @@
     #layout-button {
         font-size: 9px;
     }
-}
+} */
 
 /* Layout Button Link */
 #layout-button-link {
@@ -64,4 +64,14 @@
 
 #layout-button-link:active {
     background-color: #FB8875;
+}
+
+
+
+
+
+@media screen and (max-width: 576px){
+    #layout-link-link{
+        background-color: #D9E5DB;
+    }
 }
