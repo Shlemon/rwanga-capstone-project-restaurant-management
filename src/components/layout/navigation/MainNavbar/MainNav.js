@@ -2,7 +2,7 @@ import { LayoutItem } from './LayoutItem';
 import './MainNav.css';
 import { Outlet } from 'react-router-dom';
 import { Container, Navbar, Nav } from 'react-bootstrap';
-import LayoutObjects from '../../../../services/LocalStorage/json-objects/Layout/LayoutObjects';
+import { LayoutObjects } from '../../../routing/Routes/DefaultRoutes';
 
 
 export default function MainNav() {

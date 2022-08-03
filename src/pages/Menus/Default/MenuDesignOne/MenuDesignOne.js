@@ -33,7 +33,7 @@ export function DefaultMenuItemLayout(props)
                 {props.item.items.map(function(nextItem, nextItemIndex)
                 {
                     return(
-                        <ItemAdd key={nextItem} item={nextItem} />
+                        <ItemAdd key={nextItemIndex} item={nextItem} />
                     );
                 }
                 )}

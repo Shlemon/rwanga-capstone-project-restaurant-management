@@ -3,7 +3,7 @@ import React from 'react';
 import { Container, Row, Col } from "react-bootstrap";
 import { ContactForm } from '../../components/forms/ContactForm/ContactForm';
 import { LocationMap } from '../../components/maps/LocationMap/LocationMap';
-import { ContactBodyObject } from '../../services/LocalStorage/json-objects/Contact/ContactBodyObject';
+import { ContactBodyObject } from './ContactData/ContactBodyObject';
 
 
 const HeaderRow = () => 

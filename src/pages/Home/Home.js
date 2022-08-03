@@ -60,7 +60,7 @@ const CreateHomepageStories = (props) => {
     return(
         <>
         {props.stories.map(function(storyIdx, storyIndex){
-            if(storyIndex % 2 == 0){
+            if(storyIndex % 2 === 0){
                 return <Row key={storyIdx.body} className='text-center'><FirstCardCombo story={storyIdx} /></Row>;
             }
             else {
