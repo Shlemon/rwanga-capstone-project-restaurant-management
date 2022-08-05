@@ -35,7 +35,7 @@ export function MenuObjects() {
             dinner: {title: 'Sides', route: 'Sides', eventkey: 'link-dinner'},
             lunch: {title: 'Burgers', route: 'Burgers', eventkey: 'link-lunch'},
             brunch: {title: 'Drinks', route: 'Drinks', eventkey: 'link-brunch'},
-            drinks: {title: 'Sandwhiches', route: 'Sandwhiches', eventkey: 'link-drinks'},
+            drinks: {title: 'Sandwhiches', route: 'Sandwiches', eventkey: 'link-drinks'},
         }
     );
 }

@@ -49,7 +49,7 @@ export function PagesObject() {
             }]
         },
         {
-            pageName: 'Sandwhiches',
+            pageName: 'Sandwiches',
             pageContent: [{
                 name: 'Grilled',
                 items: [

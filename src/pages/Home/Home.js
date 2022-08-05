@@ -61,10 +61,10 @@ const CreateHomepageStories = (props) => {
         <>
         {props.stories.map(function(storyIdx, storyIndex){
             if(storyIndex % 2 === 0){
-                return <Row key={storyIdx.body} className='text-center'><FirstCardCombo story={storyIdx} /></Row>;
+                return <Row key={storyIndex} className='text-center'><FirstCardCombo story={storyIdx} /></Row>;
             }
             else {
-                return <Row key={storyIdx.body} className='text-center'><SecondCardCombo story={storyIdx} /></Row>;
+                return <Row key={storyIndex} className='text-center'><SecondCardCombo story={storyIdx} /></Row>;
             }
         })}
         </>

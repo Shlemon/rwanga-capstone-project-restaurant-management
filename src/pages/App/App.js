@@ -1,9 +1,9 @@
 import './App.css';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
 import "../../../node_modules/react-bootstrap/dist/react-bootstrap";
 import "../../../node_modules/bootstrap/dist/css/bootstrap.css";
-
-import { BrowserRouter, Routes, Route, useParams } from "react-router-dom";
 
 import MainNav from '../../components/layout/navigation/MainNavbar/MainNav';
 import MainFooter from '../../components/layout/footer/MainFooter/MainFooter';
@@ -13,7 +13,29 @@ import { MenuDesignOne } from '../Menus/Default/MenuDesignOne/MenuDesignOne';
 import { PagesObject } from '../Menus/Default/MenuDesignOne/MenuPagesData/MenuPagesData';
 import { RoutesObject } from '../../components/routing/Routes/DefaultRoutes';
 
+import { db } from '../../Firebase/firestore-cloud';
+import { doc, collection, onSnapshot } from 'firebase/firestore';
+
 function App() {
+  const [mainRoutes, setMainRoutes] = useState({});
+  const mainRouteRef = collection(db, 'pages', 'main-pages', 'first');
+  
+  useEffect(() => {
+    const unsub = onSnapshot(mainRouteRef, (doc) => {
+      doc.forEach(
+        item => {
+          //console.log(item.id);
+          //console.log(item.data());
+          setMainRoutes(oldDict => ({...oldDict, [item.id]: item.data()}));
+        }
+      )
+    },
+    (error) => {
+      console.log(`Error encountered ${error}`);
+    });
+    return () => unsub();
+  }, []);
+
   const routes = RoutesObject();
   const pages = PagesObject();
   return (
