@@ -18,23 +18,3 @@ export default async function InitializeSlices()
     
     dispatch(updateMainRoutes(mainPages));
 }
-
-
-// export async function InitializeMenuPages()
-// {
-//     await GetDefaultMenuPages().then(
-//         (item) => {
-//             dispatch(updatePages(item[0]));
-//             dispatch(updateRoutes(item[1]));
-//         }
-//     );
-// }
-
-// export async function InitializeMainPages()
-// {
-//     await GetMainPages().then(
-//         (item) => {
-//             dispatch(updateMainRoutes(item))
-//         }
-//     )
-// }

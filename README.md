@@ -1,5 +1,7 @@
 # Digital Restaurant Menu
 
+View Site: https://rwanga-capstone-project.netlify.app/
+
 ## Description
 
 This project aims to digitalize restaurant menu and management of the business as well, while keeping all operations dynamic.
