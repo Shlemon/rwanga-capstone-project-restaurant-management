@@ -50,7 +50,7 @@ export function MenuDesignOne(props)
             {
                 currentMenu.map(function(menuItem, menuItemIndex)
                 {
-                    return <DefaultMenuItemLayout item={menuItem} />
+                    return <DefaultMenuItemLayout key={menuItemIndex} item={menuItem} />
                 }
                 )
             }

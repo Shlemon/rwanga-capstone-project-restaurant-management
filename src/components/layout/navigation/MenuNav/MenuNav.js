@@ -1,15 +1,15 @@
 import './MenuNav.css';
-
 import { LayoutButton } from "../MainNavbar/LayoutItem";
 import { Nav, Navbar, Container, Col, Row } from "react-bootstrap";
-import { MenuObjects } from '../../../routing/Routes/DefaultRoutes';
 
-import { GetDefaultMenuPages } from '../../../firestore-ops/MainQueries';
+//import { GetDefaultMenuPages } from '../../../firestore-ops/MainQueries';
+
+import { useSelector } from 'react-redux';
+
 
 export default function MenuNav() 
 {
-    //const menuObjects = MenuObjects();
-    const [dataObjects, menuObjects] = GetDefaultMenuPages();
+    const menuObjects = useSelector((state) => state.menuPages.routes);
     return(
         <Container fluid>
             <Navbar className='align-items-center align-content-center justify-content-center'>
