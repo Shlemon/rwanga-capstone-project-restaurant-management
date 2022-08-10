@@ -1,7 +1,9 @@
 import { ImageDataset } from '../../../../../assets/ImageData';
 // Transfer all these json data to firestore later
 
-
+// I left this here just so I can remember the
+// structure of the objects I'm using, 
+// for later use in Dashboard
 export function PagesObject() {
     const images = ImageDataset();
     const pages = 

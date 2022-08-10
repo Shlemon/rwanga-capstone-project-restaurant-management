@@ -2,11 +2,10 @@ import { LayoutItem } from './LayoutItem';
 import './MainNav.css';
 import { Outlet } from 'react-router-dom';
 import { Container, Navbar, Nav } from 'react-bootstrap';
-import { LayoutObjects } from '../../../routing/Routes/DefaultRoutes';
-
+import { useSelector } from 'react-redux';
 
 export default function MainNav() {
-    const layoutObjects = LayoutObjects();
+    const layoutObjects = useSelector((state) => state.mainPages.routes);
     return(
         <>
         <Container fluid style={{background: "#fffded"}}>

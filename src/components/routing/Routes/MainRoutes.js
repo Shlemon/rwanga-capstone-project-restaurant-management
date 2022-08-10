@@ -2,9 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import MainNav from '../../../components/layout/navigation/MainNavbar/MainNav';
 import MainFooter from '../../../components/layout/footer/MainFooter/MainFooter';
-import LoginPage from '../../../pages/Login/LoginPage/LoginPage';
 import { MenuDesignOne } from '../../../pages/Menus/Default/MenuDesignOne/MenuDesignOne';
-import { PagesObject } from '../../../pages/Menus/Default/MenuDesignOne/MenuPagesData/MenuPagesData';
 import { RoutesObject } from "./DefaultRoutes";
 
 import { useSelector } from 'react-redux';
@@ -17,7 +15,7 @@ export default function MainRouter()
     const routes = RoutesObject();
 
     return (
-        <BrowserRouter>
+        <>
             <Routes>
                 <Route path='/' element={<MainNav />} >
                 <Route index element={routes.home} />
@@ -29,11 +27,11 @@ export default function MainRouter()
                     </Route>
                 <Route path='/contact' element={routes.contact} />
                 <Route path='/login' element={routes.login} />
-                <Route path='/dashboard' element={LoginPage()} />
+                <Route path='/dashboard' element={routes.dashboard} />
                 <Route path='*' element={routes.no_page} />
                 </Route>
             </Routes>
-            <MainFooter />
-        </BrowserRouter>  
+            <MainFooter /> 
+        </>
     );
 }

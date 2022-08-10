@@ -1,9 +1,6 @@
 import './MenuNav.css';
 import { LayoutButton } from "../MainNavbar/LayoutItem";
 import { Nav, Navbar, Container, Col, Row } from "react-bootstrap";
-
-//import { GetDefaultMenuPages } from '../../../firestore-ops/MainQueries';
-
 import { useSelector } from 'react-redux';
 
 

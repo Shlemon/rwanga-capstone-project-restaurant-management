@@ -15,4 +15,5 @@ This project aims to digitalize restaurant menu and management of the business a
 ## Features
 
 - State Management with Redux ToolKit
-- Firestore
+- Firestore Database
+- Firebase Authentication
