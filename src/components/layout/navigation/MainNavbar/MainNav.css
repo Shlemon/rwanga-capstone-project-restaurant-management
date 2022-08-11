@@ -6,10 +6,17 @@
     color: #95BDB2;
 }
 
-@media screen and (max-width: 576px){
+@media screen and (max-width: 575px){
     #dropdown-nav-break{
-        background-color: #D9E5DB;
         margin-top: 5px;
         margin-bottom: 5px;
+    }
+}
+
+
+
+@media screen and (max-width: 575px){
+    #parent-container{
+        background-color: #D9E5DB;
     }
 }

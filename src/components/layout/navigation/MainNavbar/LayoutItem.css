@@ -65,13 +65,3 @@
 #layout-button-link:active {
     background-color: #FB8875;
 }
-
-
-
-
-
-@media screen and (max-width: 576px){
-    #layout-link-link{
-        background-color: #D9E5DB;
-    }
-}

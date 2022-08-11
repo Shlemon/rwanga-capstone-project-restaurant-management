@@ -1,15 +1,20 @@
 import './LoginForm.css';
 
-import { Container, Form, Button } from 'react-bootstrap';
+import { Container, Form, Button, Row, Col } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 
 import { auth } from '../../../Firebase/firestore-cloud';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useState } from 'react';
 
+import { useDispatch } from 'react-redux';
+import { login } from '../../../redux-store/slices/authenticationSlice';
+
 
 export default function LoginForm()
 {
+    const dispatch = useDispatch();
+
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -30,6 +35,7 @@ export default function LoginForm()
         signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             console.log('Successful Login! Redirecting...');
+            dispatch(login());
             navigateToDashboard();
             }
         )
@@ -44,27 +50,29 @@ export default function LoginForm()
     }
 
     return(
-        <Container fluid className='p-5' style={{backgroundColor: '#FEFDED'}}>
-            <Container className='border border-4 py-5' style={{backgroundColor: 'white', width: '50%'}}>
-                <h1 className='text-center my-5'>Login</h1>
-                <Form>
-                    <Form.Group className="mb-3" controlId="formBasicEmail">
-                        <Form.Label className='w-100'>Username</Form.Label>
-                        <Form.Control className='w-100' type="email" placeholder="Email" onChange={handleEmailChange}/>
-                    </Form.Group>
+        <Container fluid className='p-5' style={{backgroundColor: '#D9E5DB'}}>
+            <Row className='d-flex justify-content-center'>
+                <Col md={3} className='border border-3 rounded py-5' style={{backgroundColor: 'white'}}>
+                    <h1 className='text-center my-5'>Login</h1>
+                    <Form>
+                        <Form.Group className="mb-3" controlId="formBasicEmail">
+                            <Form.Label className='w-100'>Email</Form.Label>
+                            <Form.Control className='w-100' type="email" placeholder="Email" onChange={handleEmailChange}/>
+                        </Form.Group>
 
-                    <Form.Group className="mb-4" controlId="formBasicPassword">
-                        <Form.Label className='w-100'>Password</Form.Label>
-                        <Form.Control className='w-100' type="password" placeholder="Password" onChange={handlePasswordChange}/>
-                    </Form.Group>
-                    <Form.Group className='d-flex justify-content-center'>
-                        <Button onClick={handleSignIn} style={{width: '100%'}} id='login-button'>
-                            Log In
-                        </Button>
-                    </Form.Group>
-                    {invalidState === true && <div className='text-danger text-center mt-3'>Invalid Email or Password</div> }
-                </Form>
-            </Container>
+                        <Form.Group className="mb-4" controlId="formBasicPassword">
+                            <Form.Label className='w-100'>Password</Form.Label>
+                            <Form.Control className='w-100' type="password" placeholder="Password" onChange={handlePasswordChange}/>
+                        </Form.Group>
+                        <Form.Group className='d-flex justify-content-center'>
+                            <Button className='w-100 bg-dark' onClick={handleSignIn} id='login-button'>
+                                Log In
+                            </Button>
+                        </Form.Group>
+                        {invalidState === true && <div className='text-danger text-center mt-3'>Invalid Email or Password</div> }
+                    </Form>
+                </Col>
+            </Row>
         </Container>
     );
 }

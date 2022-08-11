@@ -1,15 +1,15 @@
-import { LayoutItem } from './LayoutItem';
+import { LayoutItem, LoginButton } from './LayoutItem';
 import './MainNav.css';
 import { Outlet } from 'react-router-dom';
-import { Container, Navbar, Nav } from 'react-bootstrap';
+import { Container, Navbar, Nav, Form } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 
 export default function MainNav() {
     const layoutObjects = useSelector((state) => state.mainPages.routes);
     return(
         <>
-        <Container fluid style={{background: "#fffded"}}>
-            <Navbar expand="sm" className='justify-content-start text-center align-items-center align-content-center'>
+        <Container fluid style={{background: "#fffded"}} id='parent-container'>
+            <Navbar expand="sm" className='justify-content-start text-center al##ign-items-center align-content-center'>
                 <Navbar.Brand className="fs-2 fw-bold">Lava Rest</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
@@ -17,9 +17,11 @@ export default function MainNav() {
                         <LayoutItem data={layoutObjects.home} />
                         <LayoutItem data={layoutObjects.main_menu} />
                         <LayoutItem data={layoutObjects.contact} />
-                        <LayoutItem data={layoutObjects.login} />
                     </Nav>
                 </Navbar.Collapse>
+                <Form inline className='mx-3'>
+                    <LoginButton data={layoutObjects.login} />
+                </Form>
             </Navbar>
         </Container>
         <Outlet />
