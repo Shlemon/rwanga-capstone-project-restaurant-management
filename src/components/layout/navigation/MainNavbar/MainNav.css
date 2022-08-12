@@ -1,3 +1,20 @@
+#logout-btn {
+    color: #0C594D;
+    font-weight: bold;
+    font-size: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+#logout-btn:hover {
+    color: #FB8875;
+    transition: 150ms;
+}
+#logout-btn:active {
+    color: #FB8875;
+}
+
 .navbar-brand {
     color: #95BDB2;
 }

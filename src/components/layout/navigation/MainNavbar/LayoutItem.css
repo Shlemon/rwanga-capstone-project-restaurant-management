@@ -1,3 +1,10 @@
+#layout-link-link {
+    color: #0C594D;
+}
+#layout-link-link:hover {
+    color: #FB8875;
+}
+
 /* Nav.Item */
 .nav-item {
     background-color: #fffded;

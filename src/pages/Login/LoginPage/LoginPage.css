@@ -1,0 +1,24 @@
+/* #body-page {
+    height: 100vh;
+} */
+
+#navLink {
+    text-decoration: none;
+    color: white;
+    font-size: 15px;
+    border-bottom: 1px solid;
+}
+
+@media screen and (max-width: 462px) {
+    #panel-title {
+        font-size: 20px;
+        text-align: center;
+    }
+}
+
+#arrow-back {
+    color: white;
+}
+#arrow-back:hover {
+    color: rgb(155, 154, 154);
+}

@@ -47,6 +47,10 @@ export default function LoginForm()
             console.log('Error Code: ', errorCode);
             console.log('Error Message: ', errorMessage);
         })
+        .finally(() => {
+            setEmail('');
+            setPassword('');
+        })
     }
 
     return(

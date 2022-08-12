@@ -15,7 +15,7 @@ const MainMenu = () =>
             </Row>
             <Row className='mt-4'>
                 <Col id='menu-selection-section'>
-                    <MenuNav />
+                    <MenuNav/>
                 </Col>
             </Row>
         </Container>
