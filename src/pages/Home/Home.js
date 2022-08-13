@@ -1,4 +1,5 @@
 import './Home.css';
+import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
@@ -12,17 +13,14 @@ import meat_saj_img from '../../assets/stories/meat-tantuni.png';
 const AboutInformationSplit = () => 
 {
     return(
-        <>
+        <React.Fragment>
             <Col lg={12}>
-                <h6 id='info-id'>Inspired by the Add Inspiration thing Here.</h6>
+                Fast Food
             </Col>
             <Col lg={12}>
-                <h6 id='info-id'>Built on the principle that food tastes better when shared.</h6>
+                Crafted With Elegance
             </Col>
-            <Col lg={12}>
-                <h6 id='info-id'>For the vibrant community of Area Name.</h6>
-            </Col>
-        </>
+        </React.Fragment>
     );
 }
 
@@ -32,7 +30,7 @@ const FirstCardCombo = (props) =>
         <>
         <Col lg={6} id='left-first' style={{backgroundImage: `url(${props.story.image})`}}><Link to='/mainmenu' id='menu-as-link'>Menu</Link></Col>
         <Col lg={6} id='right-img-first'>
-            <Row className='text-start mx-5 fw-bold'>
+            <Row className='text-start ms-3 fw-bold'>
                 <Col xs={12} sm={12} md={12} lg={12} className='d-flex justify-content-start' id='body-section'>{props.story.body}</Col>
                 <Col xs={12} sm={12} md={12} lg={12} className='mt-4 d-flex justify-content-start'><Link to='/mainmenu' id='link-as-button'>{props.story.navDescription}</Link></Col>
             </Row>
@@ -46,7 +44,7 @@ const SecondCardCombo = (props) =>
     return(
         <>
         <Col lg={6} id='right-img-first' style={{backgroundColor: '#FCDFA0'}}>
-            <Row className='text-start mx-5 fw-bold'>
+            <Row className='text-start ms-3 fw-bold'>
                 <Col xs={12} sm={12} md={12} lg={12} className='d-flex justify-content-start' id='body-section'>{props.story.body}</Col>
                 <Col xs={12} sm={12} md={12} lg={12} className='mt-4 d-flex justify-content-start'><Link to='/mainmenu' id='link-as-button'>{props.story.navDescription}</Link></Col>
             </Row>
@@ -100,7 +98,7 @@ export default Home;
 const storiesStatic = [
     {
         body: 'Enjoy our current offering of delicious dishes, made with fresh ingredients.',
-        navDescription: 'View our Menu',
+        navDescription: 'View Menu',
         image: drinks_img,
     },
     {

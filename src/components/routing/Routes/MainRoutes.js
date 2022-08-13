@@ -19,7 +19,7 @@ export default function MainRouter()
     const routes = RoutesObject();
 
     return (
-        <>
+        <React.Fragment>
             <Routes>
                 <Route path='/' element={<MainNav />} >
                     <Route index element={routes.home} />
@@ -41,6 +41,6 @@ export default function MainRouter()
                     <Route path='menu_pages/edit' element={<MenuPages />} />
                 </Route>
             </Routes>
-        </>
+        </React.Fragment>
     );
 }

@@ -36,6 +36,8 @@ export default function LoginForm()
         .then((userCredential) => {
             console.log('Successful Login! Redirecting...');
             dispatch(login());
+            setEmail('');
+            setPassword('');
             navigateToDashboard();
             }
         )
@@ -46,10 +48,6 @@ export default function LoginForm()
 
             console.log('Error Code: ', errorCode);
             console.log('Error Message: ', errorMessage);
-        })
-        .finally(() => {
-            setEmail('');
-            setPassword('');
         })
     }
 

@@ -37,7 +37,7 @@ const Sidebar = () => {
   };
 
   return (
-    <>
+    <React.Fragment>
       <div id="header">
           {/* collapsed props to change menu size using menucollapse state */}
         <ProSidebar collapsed={menuCollapse}>
@@ -76,7 +76,7 @@ const Sidebar = () => {
           </SidebarFooter>
         </ProSidebar>
       </div>
-    </>
+    </React.Fragment>
   );
 };
 

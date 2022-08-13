@@ -2,6 +2,8 @@ import './MainFooter.css';
 import { Container, Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import lava_img from '../../../../assets/main-menu/lava-logo.png';
+import { RiInstagramFill, RiSnapchatFill, RiFacebookFill } from 'react-icons/ri';
+import React from 'react';
 
 const NavLinks = () =>
 {
@@ -36,7 +38,11 @@ const ContactColumn = (props) =>
                 <Col>(+964)750-123-45678</Col>
             </Row>
             <Row className='mt-2'>
-                <Col>Links to pages</Col>
+                <Col className='fs-2'>
+                    <RiInstagramFill className='me-3'/>
+                    <RiSnapchatFill className='me-3'/>
+                    <RiFacebookFill/>
+                </Col>
             </Row>
         </>
     );
@@ -57,9 +63,6 @@ const HoursColumn = (props) =>
             <Row className='mt-3'>
                 <Col>(+964)750-123-45678</Col>
             </Row>
-            <Row className='mt-2'>
-                <Col>Links to pages</Col>
-            </Row>
         </>
     );
 }
@@ -67,16 +70,15 @@ const HoursColumn = (props) =>
 const MoreInfoColumn = (props) =>
 {
     return(
-        <>
+        <React.Fragment>
             <Row>
                 <Col style={{color: '#0C594D', fontWeight: 'bold', fontSize: '20px'}}>More Info</Col>
             </Row>
             <Row className='mt-3 gap-3'>
                 <Col sm={12}><Link to='/' id='nav-link-moreinfo'>Catering</Link></Col>
-                <Col sm={12}><Link to='reserve' id='nav-link-moreinfo'>Reservations</Link></Col>
                 <Col sm={12}><Link to='contact' id='nav-link-moreinfo'>Contact Us</Link></Col>
             </Row>
-        </>
+        </React.Fragment>
     );
 }
 
@@ -92,7 +94,7 @@ const ContactInfo = () =>
                 <Col> <HoursColumn /> </Col>
                 <Col> <MoreInfoColumn /> </Col>
             </Row>
-            <Row id='contact-info-copyright' className='mt-3'>
+            <Row id='contact-info-copyright' className='mt-5'>
                 <Col lg={12} id='nav-link-moreinfo'>
                     Copyright © 2020 BUSINESS_NAME. All rights reserved.
                 </Col>

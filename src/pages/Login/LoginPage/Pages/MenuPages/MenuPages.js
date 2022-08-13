@@ -31,7 +31,7 @@ export default function MenuPages()
                     </Form.Group>
                 </Row>
 
-                <Button variant="primary my-3" type="submit">
+                <Button variant="primary my-3">
                     Update Menu
                 </Button>
             </Form>

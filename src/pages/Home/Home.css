@@ -85,8 +85,9 @@
     color: white;
     padding: 8px 50px 8px 50px;
     text-decoration: none;
+    white-space: nowrap;
+    text-align: center;
 }
-
 #link-as-button:hover {
     background-color: #FB8875;
     border-color: #FB8875;
@@ -104,7 +105,33 @@
     text-decoration: underline;
     color: white;
 }
-
 #menu-as-link:hover {
     color: #FB8875;
+}
+
+
+#information-section {
+    color: #0C594D;
+    font-weight: bold;
+    font-size: 30px;
+}
+@media screen and (max-width: 339px) {
+    #information-section {
+        font-size: 25px;
+    }
+}
+@media screen and (max-width: 287px) {
+    #information-section {
+        font-size: 20px;
+    }
+}
+@media screen and (max-width: 234px) {
+    #information-section {
+        font-size: 17px;
+    }
+}
+@media screen and (max-width: 203px) {
+    #information-section {
+        font-size: 15px;
+    }
 }
