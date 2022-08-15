@@ -8,24 +8,24 @@ import React from 'react';
 const NavLinks = () =>
 {
     return(
-        <>
-        <Col lg={4}>
-            <Link to='/' id='nav-links'>First</Link>
-        </Col>
-        <Col lg={4}>
-            <Link to='/' id='nav-links'>Second</Link>
-        </Col>
-        <Col lg={4}>
-            <Link to='/' id='nav-links'>Third</Link>
-        </Col>
-        </>
+        <React.Fragment>
+            <Col sm={4} id='footer-3-tabs'>
+                <Link to='/' id='nav-links'>First</Link>
+            </Col>
+            <Col sm={4} id='footer-3-tabs'>
+                <Link to='/' id='nav-links'>Second</Link>
+            </Col>
+            <Col sm={4} id='footer-3-tabs'>
+                <Link to='/' id='nav-links'>Third</Link>
+            </Col>
+        </React.Fragment>
     );
 }
 
 const ContactColumn = (props) =>
 {
     return(
-        <>
+        <React.Fragment>
             <Row>
                 <Col style={{color: '#0C594D', fontWeight: 'bold', fontSize: '20px'}}>Contact Us</Col>
             </Row>
@@ -44,14 +44,14 @@ const ContactColumn = (props) =>
                     <RiFacebookFill/>
                 </Col>
             </Row>
-        </>
+        </React.Fragment>
     );
 }
 
 const HoursColumn = (props) =>
 {
     return(
-        <>
+        <React.Fragment>
             <Row>
                 <Col style={{color: '#0C594D', fontWeight: 'bold', fontSize: '20px'}}>Hours</Col>
             </Row>
@@ -63,7 +63,7 @@ const HoursColumn = (props) =>
             <Row className='mt-3'>
                 <Col>(+964)750-123-45678</Col>
             </Row>
-        </>
+        </React.Fragment>
     );
 }
 
@@ -86,13 +86,13 @@ const ContactInfo = () =>
 {
     return(
         <Container className='pb-3'>
-            <Row id='contact-info-row' className='mt-5' style={{color: '#8D9F90'}}>
-                <Col sm={5} id='lava-logo-control'>
+            <Row id='contact-info-row' className='mt-5'>
+                <Col sm={6} id='lava-logo-control'>
                     <Link to='/'><img src={lava_img} alt='Lava resaurant'/></Link>
                 </Col>
-                <Col> <ContactColumn /> </Col>
-                <Col> <HoursColumn /> </Col>
-                <Col> <MoreInfoColumn /> </Col>
+                <Col sm={2} className='mt-5'> <ContactColumn /> </Col>
+                <Col sm={2} className='mt-5'> <HoursColumn /> </Col>
+                <Col sm={2} className='mt-5'> <MoreInfoColumn /> </Col>
             </Row>
             <Row id='contact-info-copyright' className='mt-5'>
                 <Col lg={12} id='nav-link-moreinfo'>
@@ -107,7 +107,7 @@ export default function MainFooter()
 {
     return(
         <Container fluid id='footer-body'>
-            <Row className='text-center py-5 fs-1'>
+            <Row className='text-center fs-1'>
                 <NavLinks />
             </Row>
             <Row id='contact-info'>

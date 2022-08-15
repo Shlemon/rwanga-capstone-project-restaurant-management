@@ -1,7 +1,13 @@
 #layout-link-link {
     color: #0C594D;
 }
+#layout-link-link:focus {
+    color: #FB8875;
+}
 #layout-link-link:hover {
+    color: #FB8875;
+}
+#layout-link-link:active {
     color: #FB8875;
 }
 

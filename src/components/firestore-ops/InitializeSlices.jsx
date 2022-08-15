@@ -1,4 +1,4 @@
-import { GetDefaultMenuPages, GetMainPages } from '../firestore-ops/MainQueries';
+import { GetDynamicMenuPages, GetMainPages } from '../firestore-ops/MainQueries';
 
 import { useSelector, useDispatch } from "react-redux";
 import { updatePages, updateRoutes } from '../../redux-store/slices/menuPagesSlice';
@@ -8,7 +8,7 @@ import { updateMainRoutes } from '../../redux-store/slices/mainPagesSlice';
 export default async function InitializeSlices()
 {
     const dispatch = useDispatch();
-    const result = await Promise.all([GetDefaultMenuPages(), GetMainPages()]);
+    const result = await Promise.all([GetDynamicMenuPages(), GetMainPages()]);
 
     const menuPages = result[0];
     const mainPages = result[1];

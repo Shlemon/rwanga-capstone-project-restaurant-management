@@ -24,8 +24,9 @@ export default function MainRouter()
                 <Route path='/' element={<MainNav />} >
                     <Route index element={routes.home} />
                     <Route path='/mainmenu' element={routes.main_menu} >
-                        <Route index element={<MenuDesignOne menuType={pages[0].pageContent} />} />
-                        {pages.map(function(page, pageIndex){
+                        <Route index element={<MenuDesignOne menuType={pages.Sides.pageContent} />} />
+                        {Object.entries(pages).map(function(page, pageIndex){
+                            page = page[1];
                             return <Route key={pageIndex} path={page.pageName} element={<MenuDesignOne menuType={page.pageContent} />} />;
                         })}
                         </Route>
@@ -38,7 +39,7 @@ export default function MainRouter()
                     <Route path='home/add' element={<Dashboard />} />
                     <Route path='home/edit' element={<Dashboard />} />
                     <Route path='menu_pages/add' element={<MenuPages />} />
-                    <Route path='menu_pages/edit' element={<MenuPages />} />
+                    <Route path='menu_pages/edit' element={routes.menu_edit} />
                 </Route>
             </Routes>
         </React.Fragment>

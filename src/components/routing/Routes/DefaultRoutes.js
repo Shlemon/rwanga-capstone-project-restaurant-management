@@ -4,6 +4,7 @@ import Contact from '../../../pages/Contact/Contact';
 import NoPage from '../../../pages/NoPage/NoPage';
 import LoginForm from '../../../pages/Login/LoginForm/LoginForm';
 import LoginPage from '../../../pages/Login/LoginPage/LoginPage';
+import Edit from '../../../pages/Login/LoginPage/Pages/MenuPages/Edit';
 
 // TBD
 // Or maybe leave this here, main navbar pages are static
@@ -17,6 +18,7 @@ export function RoutesObject() {
         contact: Contact(),
         login: LoginForm(),
         dashboard: LoginPage(),
+        menu_edit: Edit(),
         no_page: NoPage()
     };
     return routes_object;

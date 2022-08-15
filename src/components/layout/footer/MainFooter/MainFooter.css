@@ -34,3 +34,24 @@
     align-content: center;
     text-align: center;
 }
+
+
+#contact-info-row {
+    color: #8D9F90;
+    text-align: start;
+}
+@media screen and (max-width: 576px) {
+    #contact-info-row {
+        text-align: center;
+    }
+}
+
+
+#footer-3-tabs {
+    margin: 40px 0px 40px 0px;
+}
+@media screen and (max-width: 575.5px) {
+    #footer-3-tabs {
+        margin: 25px 0px 25px 0px;
+    }
+}
