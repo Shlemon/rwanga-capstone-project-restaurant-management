@@ -19,7 +19,7 @@ function ItemModal({values, ...props})
                     </Col>
                 </Row>
             </Modal.Body>
-            <Modal.Footer id='card-title'>5,000 IQD</Modal.Footer>
+            <Modal.Footer id='card-title'>{values.item.price} IQD</Modal.Footer>
         </Modal>
     );
 }

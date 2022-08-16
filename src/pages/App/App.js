@@ -7,10 +7,11 @@ import "../../../node_modules/react-bootstrap/dist/react-bootstrap";
 import "../../../node_modules/bootstrap/dist/css/bootstrap.css";
 
 import LoadingSpinner from '../../components/spinners/LoadingScreen/LoadingScreen';
+import { FactoryReset } from '../../components/firestore-ops/MainQueries';
 
 function App() {
   const [isLoading, setLoading] = useState(true);
-  
+
   InitializeSlices().then(
     () => setLoading(false)
   );

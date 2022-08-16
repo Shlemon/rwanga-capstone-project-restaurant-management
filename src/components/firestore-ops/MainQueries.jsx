@@ -96,12 +96,12 @@ export async function FactoryReset() {
     
     // Second, delete every document in firestore
     pagesSnap.forEach(
-        async(dbDoc) => {
+        (dbDoc) => {
             if(dbDoc.id === 'index'){
                 console.log('Skipping index')
             } else {
-                await deleteDoc(doc(db, `${pagePath}/${dbDoc.id}`))
-                await deleteDoc(doc(db, `${routePath}/${dbDoc.id}`))
+                deleteDoc(doc(db, `${pagePath}/${dbDoc.id}`))
+                deleteDoc(doc(db, `${routePath}/${dbDoc.id}`))
             }
 
         }
@@ -115,8 +115,9 @@ export async function FactoryReset() {
     console.log('Route data ', routeData);
     console.log('Page data ', pageData);
 
-    pageData.forEach(
+    Object.entries(pageData).forEach(
         async(dbDoc) => {
+            dbDoc = dbDoc[1];
             await setDoc(doc(db, `${pagePath}/${dbDoc.pageName}`), {
                 pageName: dbDoc.pageName,
                 pageContent: dbDoc.pageContent
@@ -125,11 +126,10 @@ export async function FactoryReset() {
     )
     Object.entries(routeData).forEach(
         async(dbDoc) => {
-            console.log('Route id ', dbDoc);
             await setDoc(doc(db, `${routePath}/${dbDoc[0]}`), {
                 title: dbDoc[1].title,
                 route: dbDoc[1].route,
-                eventkey: dbDoc[1].eventkey,
+                eventkey: dbDoc[1].eventkey
             });
         }
     )
@@ -139,10 +139,22 @@ export async function FactoryReset() {
 // DONT USE THIS FUNCTION
 export function SetDefault()
 {
-    const curItem = PagesObject()[3];
-    const docRef = doc(db, 'pages', 'menu-pages', 'default', 'pages', 'public', 'Sandwiches');
-    setDoc(docRef, {
-        pageName: curItem.pageName,
-        pageContent: curItem.pageContent,
-    })
+    const curItem = PagesObject();
+
+    curItem.forEach(
+        (menu) => {
+            const docRefPage = doc(db, 'pages', 'menu-pages', 'default', 'pages', 'public', menu.pageName);
+            const docRefRoute = doc(db, 'pages', 'menu-pages', 'default', 'routes', 'public', menu.pageName);
+
+            setDoc(docRefPage, {
+                pageName: menu.pageName,
+                pageContent: menu.pageContent,
+            })
+            setDoc(docRefRoute, {
+                title: menu.pageName,
+                route: menu.pageName,
+                eventkey: `link-${menu.pageName}`,
+            })
+        }
+    )
 }

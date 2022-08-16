@@ -63,7 +63,10 @@ export default function MenuPages() {
     const pages = useSelector((state) => state.menuPages.pages);
     const [itemTitles, contentTitles] = ExtractData(pages);
 
-    console.log('Content ', contentTitles);
+    const handleFactoryReset = () => {
+        FactoryReset();
+    }
+
     return(
         <Formik 
             initialValues={{
@@ -126,7 +129,7 @@ export default function MenuPages() {
                         <Col md={8} className='text-start'><Field name='itemDescription' className='w-25'/></Col>
                         <Col md={2}><ErrorMessage name='itemDescription'/></Col>
                     </Row>
-                    <button type='submit'>Save Changes</button>
+                    <button type='submit' onClick={handleFactoryReset} disabled>Save Changes</button>
                 </Form>
             )}
         </Formik>
