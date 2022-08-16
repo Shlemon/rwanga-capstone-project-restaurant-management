@@ -14,7 +14,6 @@ import MenuPages from '../../../pages/Login/LoginPage/Pages/MenuPages/MenuPages'
 export default function MainRouter()
 {
     const pageData = useSelector((state) => state.menuPages);
-
     const pages = pageData.pages;
     const routes = RoutesObject();
 

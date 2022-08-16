@@ -6,11 +6,13 @@
 #card-title {
     font-size: 20px;
     font-weight: bold;
+    color: #0C594D;
 }
 
 #card-text {
     font-size: 15px;
     font-weight: normal;
+    color: #0C594D;
 }
 
 
@@ -38,4 +40,9 @@
     #main-items-container {
         margin: 0px 0px 0px 0px;
     }
+}
+
+
+#item-click:hover {
+    cursor: pointer;
 }
