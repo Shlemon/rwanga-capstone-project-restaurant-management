@@ -1,10 +1,11 @@
+import './Add.css';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Formik, Field, Form, ErrorMessage, useField, useFormikContext } from 'formik';
 import * as Yup from 'yup';
 
 import { Container, Row, Col, Button } from 'react-bootstrap';
-import { FactoryReset } from '../../../../../components/firestore-ops/MainQueries';
+import { FactoryReset, UpdateMenuAdd } from '../../../../../components/firestore-ops/MainQueries';
 
 
 function ExtractData(itemArray) {
@@ -47,6 +48,7 @@ const DynamicSelect = ({children, ...props}) => {
     return(
         <React.Fragment>
             <Field as='select' {...props} {...field}>
+                <option/>
                 {titlesData.map((menuName) => {
                     return <option value={menuName}>{menuName}</option>
                 })}
@@ -56,7 +58,23 @@ const DynamicSelect = ({children, ...props}) => {
 }
 
 
-export default function MenuPages() {
+const initialValues = {
+    createItemIn: '',
+    contentType: '',
+    isChecked: false,
+    itemName: '',
+    itemDescription: '',
+};
+
+const validationSchema = Yup.object({
+    createItemIn: Yup.string().required('Required'),
+    contentType: Yup.string().required('Required'),
+    isChecked: Yup.bool().required('Required'),
+    itemName: Yup.string().required('Required'),
+    itemDescription: Yup.string().required('Required'),
+})
+
+export default function MenuAdd() {
     // This code can be minimized big time
     // by using custom field.
     // ...ill just do this shit later
@@ -64,28 +82,18 @@ export default function MenuPages() {
     const [itemTitles, contentTitles] = ExtractData(pages);
 
     const handleFactoryReset = () => {
-        FactoryReset();
+        // FactoryReset();
     }
 
     return(
         <Formik 
-            initialValues={{
-                createItemIn: '',
-                contentType: '',
-                isChecked: false,
-                itemName: '',
-                itemDescription: '',
-            }}
-            validationSchema={Yup.object({
-                createItemIn: Yup.string().required('Required'),
-                contentType: Yup.string().required('Required'),
-                isChecked: Yup.bool().required('Required'),
-                itemName: Yup.string().required('Required'),
-                itemDescription: Yup.string().required('Required'),
-            })}
+            initialValues={initialValues}
+            validationSchema={validationSchema}
             onSubmit={(values, { setSubmitting }) => {
                 setTimeout(() => {
+                    console.log('Data ', values);
                     alert(JSON.stringify(values, null, 2));
+                    UpdateMenuAdd(values);
                     setSubmitting(false);
                 }, 400)
             }}
@@ -93,43 +101,44 @@ export default function MenuPages() {
             {formik => (
                 <Form onSubmit={formik.handleSubmit} className='my-5'>
                     <Row className='mb-3'>
-                        <Col md={2} className='text-end'><label htmlFor='createItemIn'>Create item in</label></Col>
-                        <Col md={8} className='text-start'>
-                            <Field as='select' name='createItemIn' className='w-25'>
+                        <Col md={5} className='text-end' id='col-break'><label htmlFor='createItemIn'>Create item in</label></Col>
+                        <Col md={5} className='text-start' id='col-break'>
+                            <Field as='select' name='createItemIn' id='field-width'>
+                                <option/>
                                 {itemTitles.map((title) => {
                                     return <option value={title}>{title}</option>
                                 })}
                             </Field>
                         </Col>
-                        <Col md={2}><ErrorMessage name='createItemIn'/></Col>
+                        <Col md={2} id='col-break'><ErrorMessage name='createItemIn'/></Col>
                     </Row>
                     
                     <Row className='mb-3'>
-                        <Col md={2} className='text-end'><label htmlFor='isChecked'>Overwrite existing item</label></Col>
-                        <Col md={8} className='text-start'><Field type='checkbox' name='isChecked' /></Col>
-                        <Col md={2}><ErrorMessage name='isChecked'/></Col>
+                        <Col md={5} className='text-end' id='col-break'><label htmlFor='isChecked'>Overwrite existing item</label></Col>
+                        <Col md={5} className='text-start' id='col-break'><Field type='checkbox' name='isChecked'/></Col>
+                        <Col md={2} id='col-break'><ErrorMessage name='isChecked'/></Col>
                     </Row>
 
                     <Row className='mb-3'>
-                        <Col md={2} className='text-end'><label htmlFor='contentType'>Content Type</label></Col>
-                        <Col md={8} className='text-start'>
-                            <DynamicSelect children={contentTitles} name='contentType' className='w-25'/>
+                        <Col md={5} className='text-end' id='col-break'><label htmlFor='contentType'>Content Type</label></Col>
+                        <Col md={5} className='text-start' id='col-break'>
+                            <DynamicSelect children={contentTitles} name='contentType' id='field-width'/>
                             </Col>
-                        <Col md={2}><ErrorMessage name='contentType'/></Col>
+                        <Col md={2} id='col-break'><ErrorMessage name='contentType'/></Col>
                     </Row>
 
                     <Row className='mb-3'>
-                        <Col md={2} className='text-end'><label htmlFor='itemName'>Item name</label></Col>
-                        <Col md={8} className='text-start'><Field name='itemName' className='w-25'/></Col>
-                        <Col md={2}><ErrorMessage name='itemName'/></Col>
+                        <Col md={5} className='text-end' id='col-break'><label htmlFor='itemName'>Item name</label></Col>
+                        <Col md={5} className='text-start' id='col-break'><Field as='textarea' name='itemName' id='field-width'/></Col>
+                        <Col md={2} id='col-break'><ErrorMessage name='itemName'/></Col>
                     </Row>
 
                     <Row className='mb-3'>
-                        <Col md={2} className='text-end'><label htmlFor='itemDescription'>Item Description</label></Col>
-                        <Col md={8} className='text-start'><Field name='itemDescription' className='w-25'/></Col>
-                        <Col md={2}><ErrorMessage name='itemDescription'/></Col>
+                        <Col md={5} className='text-end' id='col-break'><label htmlFor='itemDescription'>Item Description</label></Col>
+                        <Col md={5} className='text-start' id='col-break'><Field as='textarea' name='itemDescription' id='field-width'/></Col>
+                        <Col md={2} id='col-break'><ErrorMessage name='itemDescription'/></Col>
                     </Row>
-                    <button type='submit' onClick={handleFactoryReset} disabled>Save Changes</button>
+                    <button type='submit'>Save Changes</button>
                 </Form>
             )}
         </Formik>

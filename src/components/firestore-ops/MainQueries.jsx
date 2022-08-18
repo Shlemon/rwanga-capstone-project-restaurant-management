@@ -1,24 +1,12 @@
 import { db } from '../../Firebase/firestore-cloud';
 import { doc, collection, getDoc, getDocs, setDoc, deleteDoc } from 'firebase/firestore';
-import { useState, useEffect } from 'react';
 import { PagesObject } from '../../pages/Menus/Default/MenuDesignOne/MenuPagesData/MenuPagesData';
 
-// export function GetMainPages() 
-// {
-//     const [response, setResponse] = useState({});
-//     useEffect(() => {
-//         ;(async() => {
-//             const docRef = doc(db, 'pages/main-pages');
-//             const docSnap = await getDoc(docRef);
-//             const data = docSnap.data();
-//             setResponse(data);
-//         })()
-//       }, []);
-//     return response;
-// }
 
-// Helper function to query data from COLLECTION
+// Helper - Get
 async function QueryCollectionData(pathToPages, pathToRoutes) {
+    // Helper function to query data from COLLECTION
+
     // Temp data holders
     const pageData = [];
     const routeData = [];
@@ -48,13 +36,7 @@ async function QueryCollectionData(pathToPages, pathToRoutes) {
     return [pageData, routeData];
 }
 
-// Helper function to reset data in DOCUMENT
-async function SetDocumentReset(pathToDoc, data) {
-    const docRef = doc(db, pathToDoc);
-    await setDoc(docRef, data)   
-}
-
-
+// Query - Get
 export async function GetDynamicMenuPages()
 {
     const pageRef = 'pages/menu-pages/dynamic/pages/public';
@@ -63,7 +45,7 @@ export async function GetDynamicMenuPages()
     return QueryCollectionData(pageRef, routeRef);
 }
 
-
+// Query - Get
 export async function GetMainPages()
 {
     // Temp data holders
@@ -83,7 +65,7 @@ export async function GetMainPages()
     return routeData;
 }
 
-
+// Query - Set
 export async function FactoryReset() {
     const pagePath = 'pages/menu-pages/dynamic/pages/public';
     const routePath = 'pages/menu-pages/dynamic/routes/public';
@@ -135,7 +117,55 @@ export async function FactoryReset() {
     )
 }
 
+export async function UpdateMenuAdd(metaData) {
+    // Define which document to get
+    const pageRef = doc(db, `pages/menu-pages/dynamic/pages/public/${metaData.createItemIn}`);
 
+    // Get the document
+    const pageSnap = await getDoc(pageRef);
+
+    // Read Document
+    const pageData = pageSnap.data().pageContent;
+    console.log('PageDataRoot ', pageData);
+
+    const newItem = {
+        name: metaData.itemName,
+        ingredients: metaData.itemDescription,
+        image: '',
+        price: 0
+    }
+
+    // Add to Pages
+    pageData.forEach(
+        (array) => {
+            if(array.name === metaData.contentType){
+                if(metaData.isChecked){
+                    let notFound = true;
+                    array.forEach(
+                        (arrayItem) => {
+                            if(arrayItem.name === metaData.itemName){
+                                // Update this specific index
+                                arrayItem = newItem;
+                                notFound = false;
+                            }
+                        }
+                    )
+                    if(notFound){
+                        array.items.push(newItem)
+                    }
+                } else {
+                    array.items.push(newItem)
+                }
+            }
+        }
+    )
+    await setDoc(pageRef, {
+        pageName: metaData.createItemIn,
+        pageContent: pageData,
+    });
+}
+
+// Query - Set
 // DONT USE THIS FUNCTION
 export function SetDefault()
 {

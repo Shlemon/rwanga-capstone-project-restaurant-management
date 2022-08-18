@@ -1,0 +1,22 @@
+#col-break {
+    font-size: 20px;
+}
+
+#field-width {
+    width: 40%;
+}
+
+#error-message {
+    color: red;
+}
+
+@media screen and (max-width: 768px) {
+    #col-break {
+        font-size: 15px;
+        display: flex;
+        justify-content: center;
+    }
+    #field-width {
+        width: 50%;
+    }
+}

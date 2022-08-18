@@ -2,9 +2,14 @@ import Home from '../../../pages/Home/Home';
 import MainMenu from '../../../pages/Menus/MainMenu';
 import Contact from '../../../pages/Contact/Contact';
 import NoPage from '../../../pages/NoPage/NoPage';
+
 import LoginForm from '../../../pages/Login/LoginForm/LoginForm';
 import LoginPage from '../../../pages/Login/LoginPage/LoginPage';
-import Edit from '../../../pages/Login/LoginPage/Pages/MenuPages/Edit';
+import MenuEdit from '../../../pages/Login/LoginPage/Pages/MenuPages/Edit';
+import MenuAdd from '../../../pages/Login/LoginPage/Pages/MenuPages/Add';
+import StoriesEdit from '../../../pages/Login/LoginPage/Pages/StoriesPages/Edit';
+import StoriesAdd from '../../../pages/Login/LoginPage/Pages/StoriesPages/Add';
+
 
 // TBD
 // Or maybe leave this here, main navbar pages are static
@@ -18,8 +23,11 @@ export function RoutesObject() {
         contact: Contact(),
         login: LoginForm(),
         dashboard: LoginPage(),
-        menu_edit: Edit(),
-        no_page: NoPage()
+        menu_edit: MenuEdit(),
+        menu_add: MenuAdd(),
+        stories_add: StoriesAdd(),
+        stories_edit: StoriesEdit(),
+        no_page: NoPage(),
     };
     return routes_object;
 }

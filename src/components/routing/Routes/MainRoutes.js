@@ -8,9 +8,6 @@ import { RoutesObject } from "./DefaultRoutes";
 import { useSelector } from 'react-redux';
 
 
-import Dashboard from '../../../pages/Login/LoginPage/Pages/Dashboard/Dashboard';
-import MenuPages from '../../../pages/Login/LoginPage/Pages/MenuPages/MenuPages';
-
 export default function MainRouter()
 {
     const pageData = useSelector((state) => state.menuPages);
@@ -34,10 +31,10 @@ export default function MainRouter()
                     <Route path='*' element={routes.no_page} />
                 </Route>             
                 <Route path='/dashboard' element={routes.dashboard} >
-                    <Route index element={<MenuPages/>} />
-                    <Route path='home/add' element={<Dashboard />} />
-                    <Route path='home/edit' element={<Dashboard />} />
-                    <Route path='menu_pages/add' element={<MenuPages />} />
+                    <Route index element={routes.menu_add} />
+                    <Route path='home/add' element={routes.stories_add} />
+                    <Route path='home/edit' element={routes.stories_edit} />
+                    <Route path='menu_pages/add' element={routes.menu_add} />
                     <Route path='menu_pages/edit' element={routes.menu_edit} />
                 </Route>
             </Routes>
