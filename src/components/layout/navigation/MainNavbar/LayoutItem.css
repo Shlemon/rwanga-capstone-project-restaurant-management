@@ -69,12 +69,16 @@
     border: solid;
     border-color: #fffded;
     background-color: orange;
+    margin: 10px 0px 10px 0px;
 }
-
 #layout-button-link:focus {
     background-color: #FB8875;
 }
-
 #layout-button-link:active {
     background-color: #FB8875;
+}
+@media screen and (max-width: 768px) {
+    #layout-button-link {
+        margin: 0px 0px 0px 0px;
+    }
 }

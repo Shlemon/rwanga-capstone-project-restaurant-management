@@ -21,10 +21,11 @@ export default function MainRouter()
                     <Route index element={routes.home} />
                     <Route path='/mainmenu' element={routes.main_menu} >
                         <Route index element={<MenuDesignOne menuType={pages.Sides.pageContent} />} />
-                        {Object.entries(pages).map(function(page, pageIndex){
-                            page = page[1];
-                            return <Route key={pageIndex} path={page.pageName} element={<MenuDesignOne menuType={page.pageContent} />} />;
-                        })}
+                        {Object.entries(pages).map(
+                            (page, pageIndex) => {
+                                page = page[1];
+                                return <Route key={pageIndex} path={page.pageName} element={<MenuDesignOne menuType={page.pageContent} />} />;
+                            })}
                         </Route>
                     <Route path='/contact' element={routes.contact} />
                     <Route path='/login' element={routes.login} />
@@ -36,6 +37,7 @@ export default function MainRouter()
                     <Route path='home/edit' element={routes.stories_edit} />
                     <Route path='menu_pages/add' element={routes.menu_add} />
                     <Route path='menu_pages/edit' element={routes.menu_edit} />
+                    <Route path='menu_pages/settings' element={routes.menu_settings} />
                 </Route>
             </Routes>
         </React.Fragment>

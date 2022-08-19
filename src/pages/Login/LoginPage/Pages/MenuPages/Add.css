@@ -19,4 +19,7 @@
     #field-width {
         width: 50%;
     }
+    #header-break {
+        font-size: 30px !important;
+    }
 }

@@ -4,8 +4,8 @@ import { useSelector } from 'react-redux';
 import { Formik, Field, Form, ErrorMessage, useField, useFormikContext } from 'formik';
 import * as Yup from 'yup';
 
-import { Container, Row, Col, Button } from 'react-bootstrap';
-import { FactoryReset, UpdateMenuAdd } from '../../../../../components/firestore-ops/MainQueries';
+import { Row, Col } from 'react-bootstrap';
+import { UpdateMenuAdd, UpdateCategoryAdd } from '../../../../../components/firestore-ops/MainQueries';
 
 
 function ExtractData(itemArray) {
@@ -58,6 +58,21 @@ const DynamicSelect = ({children, ...props}) => {
 }
 
 
+const initialValues2 = {
+    newCategory: '',
+    contentType: '',
+    itemName: '',
+    itemDescription: '',
+};
+
+const validationSchema2 = Yup.object({
+    newCategory: Yup.string().required('Required'),
+    contentType: Yup.string().required('Required'),
+    itemName: Yup.string().required('Required'),
+    itemDescription: Yup.string().required('Required'),
+})
+
+
 const initialValues = {
     createItemIn: '',
     contentType: '',
@@ -81,48 +96,89 @@ export default function MenuAdd() {
     const pages = useSelector((state) => state.menuPages.pages);
     const [itemTitles, contentTitles] = ExtractData(pages);
 
-    const handleFactoryReset = () => {
-        // FactoryReset();
-    }
-
     return(
-        <Formik 
-            initialValues={initialValues}
-            validationSchema={validationSchema}
-            onSubmit={(values, { setSubmitting }) => {
-                setTimeout(() => {
-                    console.log('Data ', values);
+        <React.Fragment>
+            <h1 className='mt-3' id='header-break' style={{fontSize: '30px'}}>Add New <br/>Item</h1>
+            <Formik 
+                initialValues={initialValues}
+                validationSchema={validationSchema}
+                onSubmit={(values, { setSubmitting }) => {
+                    setTimeout(() => {
+                        console.log('Data ', values);
+                        alert(JSON.stringify(values, null, 2));
+                        UpdateMenuAdd(values);
+                        setSubmitting(false);
+                    }, 400)
+                }}
+            >
+                {formik => (
+                    <Form onSubmit={formik.handleSubmit} className='my-5'>
+                        <Row className='mb-3'>
+                            <Col md={5} className='text-end' id='col-break'><label htmlFor='createItemIn'>Create item in</label></Col>
+                            <Col md={5} className='text-start' id='col-break'>
+                                <Field as='select' name='createItemIn' id='field-width'>
+                                    <option/>
+                                    {itemTitles.map((title) => {
+                                        return <option value={title}>{title}</option>
+                                    })}
+                                </Field>
+                            </Col>
+                            <Col md={2} id='col-break'><ErrorMessage name='createItemIn'/></Col>
+                        </Row>
+                        
+                        <Row className='mb-3'>
+                            <Col md={5} className='text-end' id='col-break'><label htmlFor='isChecked'>Overwrite existing item</label></Col>
+                            <Col md={5} className='text-start' id='col-break'><Field type='checkbox' name='isChecked'/></Col>
+                            <Col md={2} id='col-break'><ErrorMessage name='isChecked'/></Col>
+                        </Row>
+
+                        <Row className='mb-3'>
+                            <Col md={5} className='text-end' id='col-break'><label htmlFor='contentType'>Content Type</label></Col>
+                            <Col md={5} className='text-start' id='col-break'>
+                                <DynamicSelect children={contentTitles} name='contentType' id='field-width'/>
+                                </Col>
+                            <Col md={2} id='col-break'><ErrorMessage name='contentType'/></Col>
+                        </Row>
+
+                        <Row className='mb-3'>
+                            <Col md={5} className='text-end' id='col-break'><label htmlFor='itemName'>Item name</label></Col>
+                            <Col md={5} className='text-start' id='col-break'><Field as='textarea' name='itemName' id='field-width'/></Col>
+                            <Col md={2} id='col-break'><ErrorMessage name='itemName'/></Col>
+                        </Row>
+
+                        <Row className='mb-3'>
+                            <Col md={5} className='text-end' id='col-break'><label htmlFor='itemDescription'>Item Description</label></Col>
+                            <Col md={5} className='text-start' id='col-break'><Field as='textarea' name='itemDescription' id='field-width'/></Col>
+                            <Col md={2} id='col-break'><ErrorMessage name='itemDescription'/></Col>
+                        </Row>
+                        <button type='submit'>Save Changes</button>
+                    </Form>
+                )}
+            </Formik>
+            <hr/>
+            <h1 className='mt-3 mb-5' id='header-break' style={{fontSize: '30px'}}>Add New <br/>Category</h1>
+            <Formik
+                initialValues={initialValues2}
+                validationSchema={validationSchema2}
+                onSubmit={(values, {setSubmitting}) => {
                     alert(JSON.stringify(values, null, 2));
-                    UpdateMenuAdd(values);
-                    setSubmitting(false);
-                }, 400)
-            }}
-        >
-            {formik => (
-                <Form onSubmit={formik.handleSubmit} className='my-5'>
+                    UpdateCategoryAdd(values);
+                }}
+            >
+                {formik => (
+                    <Form onSubmit={formik.handleSubmit} className='my-5'>
                     <Row className='mb-3'>
-                        <Col md={5} className='text-end' id='col-break'><label htmlFor='createItemIn'>Create item in</label></Col>
+                        <Col md={5} className='text-end' id='col-break'><label htmlFor='newCategory'>New Category</label></Col>
                         <Col md={5} className='text-start' id='col-break'>
-                            <Field as='select' name='createItemIn' id='field-width'>
-                                <option/>
-                                {itemTitles.map((title) => {
-                                    return <option value={title}>{title}</option>
-                                })}
-                            </Field>
+                            <Field as='input' name='newCategory' id='field-width'/>
                         </Col>
-                        <Col md={2} id='col-break'><ErrorMessage name='createItemIn'/></Col>
-                    </Row>
-                    
-                    <Row className='mb-3'>
-                        <Col md={5} className='text-end' id='col-break'><label htmlFor='isChecked'>Overwrite existing item</label></Col>
-                        <Col md={5} className='text-start' id='col-break'><Field type='checkbox' name='isChecked'/></Col>
-                        <Col md={2} id='col-break'><ErrorMessage name='isChecked'/></Col>
+                        <Col md={2} id='col-break'><ErrorMessage name='newCategory'/></Col>
                     </Row>
 
                     <Row className='mb-3'>
                         <Col md={5} className='text-end' id='col-break'><label htmlFor='contentType'>Content Type</label></Col>
                         <Col md={5} className='text-start' id='col-break'>
-                            <DynamicSelect children={contentTitles} name='contentType' id='field-width'/>
+                            <Field name='contentType' id='field-width' as='input' placeholder='For The Hands...'/>
                             </Col>
                         <Col md={2} id='col-break'><ErrorMessage name='contentType'/></Col>
                     </Row>
@@ -140,8 +196,9 @@ export default function MenuAdd() {
                     </Row>
                     <button type='submit'>Save Changes</button>
                 </Form>
-            )}
-        </Formik>
+                )}
+            </Formik>
+        </React.Fragment>
     );
 }
 

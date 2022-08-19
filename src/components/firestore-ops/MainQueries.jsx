@@ -1,11 +1,13 @@
 import { db } from '../../Firebase/firestore-cloud';
-import { doc, collection, getDoc, getDocs, setDoc, deleteDoc } from 'firebase/firestore';
+import { doc, collection, getDoc, getDocs, setDoc, deleteDoc, onSnapshot } from 'firebase/firestore';
 import { PagesObject } from '../../pages/Menus/Default/MenuDesignOne/MenuPagesData/MenuPagesData';
 
 
 // Helper - Get
-async function QueryCollectionData(pathToPages, pathToRoutes) {
+async function QueryCollectionData(pathToPages, pathToRoutes, useSnapshot) {
     // Helper function to query data from COLLECTION
+
+    console.log('Using Snapshot::', useSnapshot);
 
     // Temp data holders
     const pageData = [];
@@ -16,8 +18,16 @@ async function QueryCollectionData(pathToPages, pathToRoutes) {
     const routeDocRef = collection(db, pathToRoutes);
 
     // Data collectors
-    const pagesDocSnap = await getDocs(pageDocRef);
-    const routesDocSnap = await getDocs(routeDocRef);
+    let pagesDocSnap = undefined;
+    let routesDocSnap = undefined;
+
+    if(useSnapshot){
+        pagesDocSnap = onSnapshot(pageDocRef);
+        routesDocSnap = onSnapshot(routeDocRef);
+    } else {
+        pagesDocSnap = await getDocs(pageDocRef);
+        routesDocSnap = await getDocs(routeDocRef);
+    }
 
     pagesDocSnap.forEach(
         doc => {
@@ -42,7 +52,7 @@ export async function GetDynamicMenuPages()
     const pageRef = 'pages/menu-pages/dynamic/pages/public';
     const routeRef = 'pages/menu-pages/dynamic/routes/public';
 
-    return QueryCollectionData(pageRef, routeRef);
+    return QueryCollectionData(pageRef, routeRef, false);
 }
 
 // Query - Get
@@ -92,7 +102,7 @@ export async function FactoryReset() {
     // Third, fill collection with default documents
 
     // Get default documents
-    const [pageData, routeData ] = await QueryCollectionData('pages/menu-pages/default/pages/public', 'pages/menu-pages/default/routes/public');
+    const [pageData, routeData ] = await QueryCollectionData('pages/menu-pages/default/pages/public', 'pages/menu-pages/default/routes/public', false);
 
     console.log('Route data ', routeData);
     console.log('Page data ', pageData);
@@ -163,6 +173,28 @@ export async function UpdateMenuAdd(metaData) {
         pageName: metaData.createItemIn,
         pageContent: pageData,
     });
+}
+
+export async function UpdateCategoryAdd(metaData) {
+    const pageRef = doc(db, `pages/menu-pages/dynamic/pages/public/${metaData.newCategory}`);
+    const routeRef = doc(db, `pages/menu-pages/dynamic/routes/public/${metaData.newCategory}`);
+
+    await setDoc(pageRef, {
+        pageName: metaData.newCategory,
+        pageContent: [
+            {
+                name: metaData.contentType,
+                items: [
+                    {name: metaData.itemName, ingredients: metaData.itemDescription, image: '', price: 0},
+                ]
+            }              
+        ]
+    });
+    await setDoc(routeRef, {
+        title: metaData.newCategory,
+        route: metaData.newCategory,
+        eventkey: `link-${metaData.newCategory}`
+    })
 }
 
 // Query - Set

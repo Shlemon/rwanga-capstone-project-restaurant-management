@@ -9,6 +9,7 @@ import MenuEdit from '../../../pages/Login/LoginPage/Pages/MenuPages/Edit';
 import MenuAdd from '../../../pages/Login/LoginPage/Pages/MenuPages/Add';
 import StoriesEdit from '../../../pages/Login/LoginPage/Pages/StoriesPages/Edit';
 import StoriesAdd from '../../../pages/Login/LoginPage/Pages/StoriesPages/Add';
+import MenuSettings from '../../../pages/Login/LoginPage/Pages/Settings/Settings';
 
 
 // TBD
@@ -27,6 +28,7 @@ export function RoutesObject() {
         menu_add: MenuAdd(),
         stories_add: StoriesAdd(),
         stories_edit: StoriesEdit(),
+        menu_settings: MenuSettings(),
         no_page: NoPage(),
     };
     return routes_object;

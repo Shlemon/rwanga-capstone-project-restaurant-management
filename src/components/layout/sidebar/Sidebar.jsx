@@ -60,7 +60,7 @@ const Sidebar = () => {
                     <MenuItem icon={<MdEdit />}>Edit Menu Page<Link to='menu_pages/edit' /></MenuItem>
                 </SubMenu>
 
-              <MenuItem icon={<BiCog />}>Settings</MenuItem>
+              <MenuItem icon={<BiCog />}>Settings<Link to='menu_pages/settings'/></MenuItem>
 
             </Menu>
           </SidebarContent>

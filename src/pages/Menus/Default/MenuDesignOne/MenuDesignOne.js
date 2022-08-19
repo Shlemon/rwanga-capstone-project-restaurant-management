@@ -49,19 +49,16 @@ function ItemAdd(props)
     );
 }
 
-export function DefaultMenuItemLayout(props)
+function DefaultMenuItemLayout(props)
 {
     return(
         <Row className='text-center' id='main-items-container'>
             <Row><Col className='fs-1 mb-4 mt-5' style={{color: '#95BDB2'}}>{props.item.name}</Col></Row>
             <Row className='mt-5'>
-                {props.item.items.map(function(nextItem, nextItemIndex)
-                {
-                    return(
-                        <ItemAdd key={nextItemIndex} item={nextItem}/>
-                    );
-                }
-                )}
+                {props.item.items.map(
+                    (nextItem, nextItemIndex) => {
+                        return <ItemAdd key={nextItemIndex} item={nextItem}/>
+                    })}
             </Row>
         </Row>
     )
@@ -72,13 +69,10 @@ export function MenuDesignOne(props)
     const currentMenu = props.menuType;
     return(
         <Container fluid style={{backgroundColor: '#FEFDED', color: '#0C594D', fontWeight: 'bold'}}>
-            {
-                currentMenu.map(function(menuItem, menuItemIndex)
-                {
+            {currentMenu.map(
+                (menuItem, menuItemIndex) => {
                     return <DefaultMenuItemLayout key={menuItemIndex} item={menuItem}/>
-                }
-                )
-            }
+                })}
         </Container>
     );
 }
