@@ -1,107 +1,40 @@
 import './Add.css';
 import React from 'react';
+import { Row, Col } from 'react-bootstrap';
+
+import { UpdateMenuAdd, UpdateCategoryAdd } from '../../../../../components/firestore-ops/MainQueries';
 import { useSelector } from 'react-redux';
-import { Formik, Field, Form, ErrorMessage, useField, useFormikContext } from 'formik';
+import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 
-import { Row, Col } from 'react-bootstrap';
-import { UpdateMenuAdd, UpdateCategoryAdd } from '../../../../../components/firestore-ops/MainQueries';
+import DynamicSelect from '../../../../../components/forms/FormikForms/DynamicSelect';
+import DataHive from '../DataHive';
 
-
-function ExtractData(itemArray) {
-    const titles = [];
-    const contentTitle = [];
-    
-    Object.entries(itemArray).map((item) => {
-        // This is the title
-        titles.push(item[0])
-        // This is the pageContent to be iterated
-        item[1].pageContent.map((content) => {
-            item[0] in contentTitle ? contentTitle[item[0]].push(content.name) : contentTitle[item[0]] = [content.name]
-        })
-    })
-    return [titles, contentTitle];
-}
-
-const DynamicSelect = ({children, ...props}) => {
-    const [titlesData, setData] = React.useState([]);
-    const {
-        values: {createItemIn},
-        touched,
-        setFieldValue,
-    } = useFormikContext();
-    const field = useField(props);
-
-    React.useEffect(() => {
-        // First, reset the data storage
-        setData([]);
-
-        Object.entries(children).map((child) => {
-            if(child[0] === createItemIn){
-                child[1].forEach((itemName) => {
-                    setData(prevData => [...prevData, itemName]);
-                })
-            }
-        })
-    }, [createItemIn, touched.createItemIn, touched.createItemIn, setFieldValue, props.name]);
-
-    return(
-        <React.Fragment>
-            <Field as='select' {...props} {...field}>
-                <option/>
-                {titlesData.map((menuName) => {
-                    return <option value={menuName}>{menuName}</option>
-                })}
-            </Field>
-        </React.Fragment>
-    )
-}
-
-
-const initialValues2 = {
-    newCategory: '',
-    contentType: '',
-    itemName: '',
-    itemDescription: '',
-};
-
-const validationSchema2 = Yup.object({
-    newCategory: Yup.string().required('Required'),
-    contentType: Yup.string().required('Required'),
-    itemName: Yup.string().required('Required'),
-    itemDescription: Yup.string().required('Required'),
-})
-
-
-const initialValues = {
-    createItemIn: '',
-    contentType: '',
-    isChecked: false,
-    itemName: '',
-    itemDescription: '',
-};
-
-const validationSchema = Yup.object({
-    createItemIn: Yup.string().required('Required'),
-    contentType: Yup.string().required('Required'),
-    isChecked: Yup.bool().required('Required'),
-    itemName: Yup.string().required('Required'),
-    itemDescription: Yup.string().required('Required'),
-})
 
 export default function MenuAdd() {
     // This code can be minimized big time
     // by using custom field.
     // ...ill just do this shit later
-    const pages = useSelector((state) => state.menuPages.pages);
-    const [itemTitles, contentTitles] = ExtractData(pages);
+    const hive = new DataHive();
 
     return(
         <React.Fragment>
             <h1 className='mt-3' id='header-break' style={{fontSize: '30px'}}>Add New <br/>Item</h1>
             <Formik 
-                initialValues={initialValues}
-                validationSchema={validationSchema}
+                initialValues={{
+                    createItemIn: '',
+                    contentType: '',
+                    isChecked: false,
+                    itemName: '',
+                    itemDescription: '',
+                }}
+                validationSchema={Yup.object({
+                    createItemIn: Yup.string().required('Required'),
+                    contentType: Yup.string().required('Required'),
+                    isChecked: Yup.bool().required('Required'),
+                    itemName: Yup.string().required('Required'),
+                    itemDescription: Yup.string().required('Required'),
+                })}
                 onSubmit={(values, { setSubmitting }) => {
                     setTimeout(() => {
                         console.log('Data ', values);
@@ -118,7 +51,7 @@ export default function MenuAdd() {
                             <Col md={5} className='text-start' id='col-break'>
                                 <Field as='select' name='createItemIn' id='field-width'>
                                     <option/>
-                                    {itemTitles.map((title) => {
+                                    {hive.getHeaderTitle().map((title) => {
                                         return <option value={title}>{title}</option>
                                     })}
                                 </Field>
@@ -135,7 +68,7 @@ export default function MenuAdd() {
                         <Row className='mb-3'>
                             <Col md={5} className='text-end' id='col-break'><label htmlFor='contentType'>Content Type</label></Col>
                             <Col md={5} className='text-start' id='col-break'>
-                                <DynamicSelect children={contentTitles} name='contentType' id='field-width'/>
+                                <DynamicSelect children={hive.getContentTitles()} name='contentType' id='field-width'/>
                                 </Col>
                             <Col md={2} id='col-break'><ErrorMessage name='contentType'/></Col>
                         </Row>
@@ -158,8 +91,18 @@ export default function MenuAdd() {
             <hr/>
             <h1 className='mt-3 mb-5' id='header-break' style={{fontSize: '30px'}}>Add New <br/>Category</h1>
             <Formik
-                initialValues={initialValues2}
-                validationSchema={validationSchema2}
+                initialValues={{
+                    newCategory: '',
+                    contentType: '',
+                    itemName: '',
+                    itemDescription: '',
+                }}
+                validationSchema={Yup.object({
+                    newCategory: Yup.string().required('Required'),
+                    contentType: Yup.string().required('Required'),
+                    itemName: Yup.string().required('Required'),
+                    itemDescription: Yup.string().required('Required'),
+                    })}
                 onSubmit={(values, {setSubmitting}) => {
                     alert(JSON.stringify(values, null, 2));
                     UpdateCategoryAdd(values);
