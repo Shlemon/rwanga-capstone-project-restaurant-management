@@ -16,7 +16,7 @@ import { FaHome } from "react-icons/fa";
 import { FiArrowLeftCircle, FiArrowRightCircle } from "react-icons/fi";
 import { BiCog } from "react-icons/bi";
 import { RiListSettingsLine, RiListSettingsFill } from 'react-icons/ri';
-import { MdOutlineFastfood, MdAdd, MdEdit } from 'react-icons/md';
+import { MdOutlineFastfood, MdAdd, MdEdit, MdDeleteForever } from 'react-icons/md';
 
 import { Link } from 'react-router-dom';
 
@@ -50,17 +50,19 @@ const Sidebar = () => {
           <SidebarContent>
             <Menu iconShape="square">
 
-                <SubMenu title='Home' icon={<FaHome/>}>
-                    <MenuItem icon={<MdAdd />}>Add Story<Link to='home/add'/></MenuItem>
-                    <MenuItem icon={<MdEdit />}>Edit Story<Link to='home/edit' /></MenuItem>
-                </SubMenu>
+              <SubMenu title='Home' icon={<FaHome/>}>
+                  <MenuItem icon={<MdAdd/>}>Add Story<Link to='home/add'/></MenuItem>
+                  <MenuItem icon={<MdEdit/>}>Edit Story<Link to='home/edit'/></MenuItem>
+                  <MenuItem icon={<MdDeleteForever/>}>Delete Story<Link to='home/delete'/></MenuItem>
+              </SubMenu>
 
-                <SubMenu title='Menu Pages' icon={<MdOutlineFastfood />}>
-                    <MenuItem icon={<MdAdd />}>Add Menu Page<Link to='menu_pages/add'/></MenuItem>
-                    <MenuItem icon={<MdEdit />}>Edit Menu Page<Link to='menu_pages/edit' /></MenuItem>
-                </SubMenu>
+              <SubMenu title='Menu Pages' icon={<MdOutlineFastfood />}>
+                  <MenuItem icon={<MdAdd/>}>Add Menu Page<Link to='menu_pages/add'/></MenuItem>
+                  <MenuItem icon={<MdEdit/>}>Edit Menu Page<Link to='menu_pages/edit'/></MenuItem>
+                  <MenuItem icon={<MdDeleteForever/>}>Delete Menu Page<Link to='menu_pages/delete'/></MenuItem>
+              </SubMenu>
 
-              <MenuItem icon={<BiCog />}>Settings<Link to='menu_pages/settings'/></MenuItem>
+            <MenuItem icon={<BiCog/>}>Settings<Link to='menu_pages/settings'/></MenuItem>
 
             </Menu>
           </SidebarContent>

@@ -1,11 +1,10 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
+import { useSelector } from 'react-redux';
 
 import MainNav from '../../../components/layout/navigation/MainNavbar/MainNav';
 import { MenuDesignOne } from '../../../pages/Menus/Default/MenuDesignOne/MenuDesignOne';
 import { RoutesObject } from "./DefaultRoutes";
-
-import { useSelector } from 'react-redux';
 
 
 export default function MainRouter()
@@ -24,12 +23,11 @@ export default function MainRouter()
                         {Object.entries(pages).map(
                             (page, pageIndex) => {
                                 page = page[1];
-                                return <Route key={pageIndex} path={page.pageName} element={<MenuDesignOne menuType={page.pageContent} />} />;
+                                return <Route key={pageIndex} path={page.pageName.replaceAll(" ", "")} element={<MenuDesignOne menuType={page.pageContent} />} />;
                             })}
                         </Route>
                     <Route path='/contact' element={routes.contact} />
                     <Route path='/login' element={routes.login} />
-                    <Route path='*' element={routes.no_page} />
                 </Route>             
                 <Route path='/dashboard' element={routes.dashboard} >
                     <Route index element={routes.menu_add} />
@@ -37,8 +35,10 @@ export default function MainRouter()
                     <Route path='home/edit' element={routes.stories_edit} />
                     <Route path='menu_pages/add' element={routes.menu_add} />
                     <Route path='menu_pages/edit' element={routes.menu_edit} />
+                    <Route path='menu_pages/delete' element={routes.menu_delete} />
                     <Route path='menu_pages/settings' element={routes.menu_settings} />
                 </Route>
+                <Route path='*' element={routes.no_page} />
             </Routes>
         </React.Fragment>
     );

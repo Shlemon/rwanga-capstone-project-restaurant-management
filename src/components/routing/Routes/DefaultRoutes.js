@@ -5,10 +5,14 @@ import NoPage from '../../../pages/NoPage/NoPage';
 
 import LoginForm from '../../../pages/Login/LoginForm/LoginForm';
 import LoginPage from '../../../pages/Login/LoginPage/LoginPage';
+
 import MenuEdit from '../../../pages/Login/LoginPage/Pages/MenuPages/Edit';
 import MenuAdd from '../../../pages/Login/LoginPage/Pages/MenuPages/Add';
+import MenuDelete from '../../../pages/Login/LoginPage/Pages/MenuPages/Delete';
+
 import StoriesEdit from '../../../pages/Login/LoginPage/Pages/StoriesPages/Edit';
 import StoriesAdd from '../../../pages/Login/LoginPage/Pages/StoriesPages/Add';
+
 import MenuSettings from '../../../pages/Login/LoginPage/Pages/Settings/Settings';
 
 
@@ -26,6 +30,7 @@ export function RoutesObject() {
         dashboard: LoginPage(),
         menu_edit: MenuEdit(),
         menu_add: MenuAdd(),
+        menu_delete: MenuDelete(),
         stories_add: StoriesAdd(),
         stories_edit: StoriesEdit(),
         menu_settings: MenuSettings(),

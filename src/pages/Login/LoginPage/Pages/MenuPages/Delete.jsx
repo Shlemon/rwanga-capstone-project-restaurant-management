@@ -12,7 +12,7 @@ import ColumnStructure from '../../../../../components/forms/FormikForms/ColumnS
 import DataHive from '../DataHive';
 
 
-export default function MenuEdit() {
+export default function MenuDelete() {
     // This code can be minimized big time
     // by using custom field.
     // ...ill just do this shit later
@@ -20,23 +20,21 @@ export default function MenuEdit() {
 
     return(
         <React.Fragment>
-            <h1 className='mt-3' id='header-break' style={{fontSize: '30px'}}>Edit Item</h1>
+            <h1 className='mt-3' id='header-break' style={{fontSize: '30px'}}>Delete Item</h1>
             <Formik 
                 initialValues={{
                     createItemIn: '',
                     contentType: '',
                     itemName: '',
-                    newItemName: '',
                 }}
                 validationSchema={Yup.object({
                     createItemIn: Yup.string().required('Required'),
                     contentType: Yup.string().required('Required'),
                     itemName: Yup.string().required('Required'),
-                    newItemName: Yup.string().required('Required'),
                 })}
                 onSubmit={(values, {setSubmitting}) => {
+                    EditMenuItem({mode: 'delete', ...values})
                     alert(JSON.stringify(values, null, 2));
-                    EditMenuItem({mode: 'edit', ...values});
                 }}
             >
                 {formik => (
@@ -63,29 +61,22 @@ export default function MenuEdit() {
                             title: 'Item name',
                             injection: (<DynamicItemSelect children={hive.getContentBody()} name='itemName' id='field-width'/>)
                         }}/>
-                        <ColumnStructure cdata={{
-                            name: 'newItemName',
-                            title: 'New Name',
-                            injection: (<Field as='input' name='newItemName' id='field-width'/>)
-                        }}/>
                         <Row><Col md={12} className='d-flex justify-content-center'><button type='submit' className='btn-42'>Save Changes</button></Col></Row>
                     </Form>
                 )}
             </Formik>
             <hr/>
-            <h1 className='mt-3 mb-5' id='header-break' style={{fontSize: '30px'}}>Edit <br/>Category</h1>
+            <h1 className='mt-3 mb-5' id='header-break' style={{fontSize: '30px'}}>Delete <br/>Category</h1>
             <Formik
                 initialValues={{
                     selectedCategory: '',
-                    newCategory: '',
                 }}
                 validationSchema={Yup.object({
                     selectedCategory: Yup.string().required('Required'),
-                    newCategory: Yup.string().required('Required'),
                 })}
                 onSubmit={(values, {setSubmitting}) => {
-                    alert('Changed category name successfully!');
-                    EditMenuCategory({mode: 'edit', ...values});
+                    EditMenuCategory({mode: 'delete', ...values});
+                    alert(`Deleted ${values.selectedCategory}`);
                 }}
             >
                 {formik => (
@@ -102,31 +93,24 @@ export default function MenuEdit() {
                                 </Field>
                             )
                         }}/>
-                        <ColumnStructure cdata={{
-                            name: 'newCategory',
-                            title: 'New Category',
-                            injection: (<Field as='input' name='newCategory' id='field-width'/>)
-                        }}/>
                         <Row><Col md={12} className='d-flex justify-content-center'><button type='submit' className='btn-42'>Save Changes</button></Col></Row>
                 </Form>
                 )}
             </Formik>
             <hr/>
-            <h1 className='mt-3 mb-5' id='header-break' style={{fontSize: '30px'}}>Edit Content Type</h1>
+            <h1 className='mt-3 mb-5' id='header-break' style={{fontSize: '30px'}}>Delete Content Type</h1>
             <Formik 
                 initialValues={{
                     createItemIn: '',
                     contentType: '',
-                    newItemName: '',
                 }}
                 validationSchema={Yup.object({
                     createItemIn: Yup.string().required('Required'),
                     contentType: Yup.string().required('Required'),
-                    newItemName: Yup.string().required('Required').max(12, 'Text length must be 12 or less!'),
                 })}
                 onSubmit={(values, {setSubmitting}) => {
+                    EditMenuContent({mode: 'delete', ...values})
                     alert(JSON.stringify(values, null, 2));
-                    EditMenuContent({mode: 'edit', ...values});
                 }}
             >
                 {formik => (
@@ -146,11 +130,6 @@ export default function MenuEdit() {
                             name: 'contentType',
                             title: 'Content Type',
                             injection: (<DynamicSelect children={hive.getContentTitles()} name='contentType' id='field-width'/>)
-                        }}/>
-                        <ColumnStructure cdata={{
-                            name: 'newItemName',
-                            title: 'New Name',
-                            injection: (<Field as='input' name='newItemName' id='field-width'/>)
                         }}/>
                         <Row><Col md={12} className='d-flex justify-content-center'><button type='submit' className='btn-42'>Save Changes</button></Col></Row>
                     </Form>

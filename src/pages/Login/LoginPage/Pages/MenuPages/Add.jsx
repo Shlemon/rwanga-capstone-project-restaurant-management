@@ -2,7 +2,7 @@ import './Add.css';
 import React from 'react';
 import { Row, Col } from 'react-bootstrap';
 
-import { UpdateMenuAdd, UpdateCategoryAdd } from '../../../../../components/firestore-ops/MainQueries';
+import { AddMenuItem, AddMenuCategory, AddMenuContentType } from '../../../../../components/firestore-ops/MainQueries';
 import { Formik, Field, Form } from 'formik';
 import * as Yup from 'yup';
 
@@ -39,7 +39,7 @@ export default function MenuAdd() {
                     setTimeout(() => {
                         console.log('Data ', values);
                         alert(JSON.stringify(values, null, 2));
-                        UpdateMenuAdd(values);
+                        AddMenuItem(values);
                         setSubmitting(false);
                     }, 400)
                 }}
@@ -97,7 +97,7 @@ export default function MenuAdd() {
                     })}
                 onSubmit={(values, {setSubmitting}) => {
                     alert(JSON.stringify(values, null, 2));
-                    UpdateCategoryAdd(values);
+                    AddMenuCategory(values);
                 }}
             >
                 {formik => (
@@ -124,6 +124,48 @@ export default function MenuAdd() {
                         }}/>
                         <Row><Col md={12} className='d-flex justify-content-center'><button type='submit' className='btn-42'>Save Changes</button></Col></Row>
                 </Form>
+                )}
+            </Formik>
+            <h1 className='mt-3' id='header-break' style={{fontSize: '30px'}}>Add New <br/>Content Type</h1>
+            <Formik 
+                initialValues={{
+                    createItemIn: '',
+                    contentType: '',
+                }}
+                validationSchema={Yup.object({
+                    createItemIn: Yup.string().required('Required'),
+                    contentType: Yup.string().required('Required'),
+                })}
+                onSubmit={(values, { setSubmitting }) => {
+                    setTimeout(() => {
+                        console.log('Data ', values);
+                        alert(JSON.stringify(values, null, 2));
+                        AddMenuContentType(values);
+                        setSubmitting(false);
+                    }, 400)
+                }}
+            >
+                {formik => (
+                    <Form onSubmit={formik.handleSubmit} className='my-5'>
+                        <ColumnStructure cdata={{
+                            name: 'createItemIn',
+                            title: 'Create item in',
+                            injection: (
+                                <Field as='select' name='createItemIn' id='field-width'>
+                                    <option/>
+                                    {hive.getHeaderTitle().map((title) => {
+                                        return <option value={title}>{title}</option>
+                                    })}
+                                </Field>
+                            )
+                        }}/>
+                        <ColumnStructure cdata={{
+                            name: 'contentType',
+                            title: 'Content Type',
+                            injection: (<Field as='input' name='contentType' id='field-width'/>)
+                        }}/>
+                        <Row><Col md={12} className='d-flex justify-content-center'><button type='submit' className='btn-42'>Save Changes</button></Col></Row>
+                    </Form>
                 )}
             </Formik>
         </React.Fragment>

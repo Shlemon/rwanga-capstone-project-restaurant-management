@@ -1,10 +1,12 @@
 import '../MenuPages/Add.css';
+import React from 'react';
 
 import { Row, Col, Modal, Button } from 'react-bootstrap';
-import React from 'react';
-import { Formik, Field, Form, ErrorMessage } from 'formik';
+import { Formik, Field, Form } from 'formik';
 import * as Yup from 'yup';
+
 // import { FactoryReset } from '../../../../../components/firestore-ops/MainQueries';
+import ColumnStructure from '../../../../../components/forms/FormikForms/ColumnStructure';
 
 
 const initialValues = {
@@ -38,7 +40,7 @@ export default function MenuSettings() {
     const handleShow = () => setShowModal(true);
     const handleClose = () => setShowModal(false);
     const handleConfirm = () => {
-        alert('RESETING...(Not Implemented Yet)'); 
+        alert('RESETING...(Disabled)'); 
         setShowModal(false);
     }
 
@@ -48,24 +50,24 @@ export default function MenuSettings() {
             validationSchema={validationSchema}
             onSubmit={(values, {setSubmitting}) => {
                 // alert(JSON.stringify(values, null, 2));
-                handleShow();
+                if(values.isChecked){
+                    handleShow();
+                }
             }}
             >
                 {formik => (
                     <Form onSubmit={formik.handleSubmit} className='my-5'>
-                        <Row className='mb-3'>
-                            <Col md={7} className='text-end' id='col-break'><label htmlFor='isChecked'>Factory Reset Menu Settings</label></Col>
-                            <Col md={3} className='text-start' id='col-break'><Field type='checkbox' name='isChecked'/></Col>
-                            <Col md={2} id='col-break'><ErrorMessage name='isChecked'/></Col>
-                        </Row>
+                        <ColumnStructure cdata={{
+                            name: 'isChecked',
+                            title: 'Factory Reset Menu Settings',
+                            injection: (<Field type='checkbox' name='isChecked' id='field-width'/>)
+                        }}/>
                         <ConfirmationModal p={{
                             show: showModal,
                             handleClose: handleClose,
                             handleConfirm: handleConfirm,
                         }}/>
-                        <Row>
-                            <Col md={12} className='d-flex justify-content-center'><button type='submit' className='btn-42'>Save Changes</button></Col>
-                        </Row>
+                        <Row><Col md={12} className='d-flex justify-content-center'><button type='submit' className='btn-42'>Save Changes</button></Col></Row>
                     </Form>
                 )}
         </Formik>
