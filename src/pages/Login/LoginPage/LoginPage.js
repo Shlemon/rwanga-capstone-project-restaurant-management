@@ -27,7 +27,7 @@ export default function LoginPage()
             <MainRow />
             <Row id='main-page-row'>
                 <Col xs={2} className='text-center text-white' id='vertical-navbar'>
-                    <Sidebar />
+                    <Sidebar/>
                 </Col>
                 <Col xs={10} className='text-center' id='body-page'>
                     <Outlet />

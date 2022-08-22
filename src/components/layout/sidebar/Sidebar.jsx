@@ -38,7 +38,7 @@ const Sidebar = () => {
 
   return (
     <React.Fragment>
-      <div id="header">
+      <div id="header" style={{height: '100%'}}>
           {/* collapsed props to change menu size using menucollapse state */}
         <ProSidebar collapsed={menuCollapse}>
           <SidebarHeader className="mt-4">
@@ -49,31 +49,23 @@ const Sidebar = () => {
           </SidebarHeader>
           <SidebarContent>
             <Menu iconShape="square">
-
               <SubMenu title='Home' icon={<FaHome/>}>
                   <MenuItem icon={<MdAdd/>}>Add Story<Link to='home/add'/></MenuItem>
                   <MenuItem icon={<MdEdit/>}>Edit Story<Link to='home/edit'/></MenuItem>
                   <MenuItem icon={<MdDeleteForever/>}>Delete Story<Link to='home/delete'/></MenuItem>
               </SubMenu>
-
               <SubMenu title='Menu Pages' icon={<MdOutlineFastfood />}>
                   <MenuItem icon={<MdAdd/>}>Add Menu Page<Link to='menu_pages/add'/></MenuItem>
                   <MenuItem icon={<MdEdit/>}>Edit Menu Page<Link to='menu_pages/edit'/></MenuItem>
                   <MenuItem icon={<MdDeleteForever/>}>Delete Menu Page<Link to='menu_pages/delete'/></MenuItem>
               </SubMenu>
-
             <MenuItem icon={<BiCog/>}>Settings<Link to='menu_pages/settings'/></MenuItem>
-
             </Menu>
           </SidebarContent>
-          <SidebarFooter style={{border: 'none'}}>
-            <div className="closemenu mb-5" onClick={menuIconClick}>
+          <SidebarFooter style={{border: 'none', height: '100%'}}>
+            <div className="closemenu mb-5" onClick={menuIconClick} style={{height: '100%'}}>
                     {/* changing menu collapse icon on click */}
-                {menuCollapse ? (
-                    <FiArrowRightCircle/>
-                ) : (
-                    <FiArrowLeftCircle/>
-                )}
+                {menuCollapse ? (<FiArrowRightCircle/>) : (<FiArrowLeftCircle/>)}
             </div>
           </SidebarFooter>
         </ProSidebar>
