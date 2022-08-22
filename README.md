@@ -5,7 +5,7 @@ View Site: https://rwanga-capstone-project.netlify.app/
 Info: Dummy account to test login functionality
 
 email: dummy-account@email.com
-password: 123456
+password: \*\*\*
 
 ## Description
 
