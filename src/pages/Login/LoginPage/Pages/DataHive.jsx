@@ -24,7 +24,6 @@ export default class DataHive {
         const contentTitle = [];
         const pageContent = [];
 
-        console.log('From Data Hive: ', this.#pages);
         Object.entries(this.#pages).forEach(
             (kV) => {
                 // Populate itemTitles here
@@ -43,7 +42,7 @@ export default class DataHive {
                                     // If content exists in category, append data to list
                                     if(array.name in pageContent[kV[0]]){
                                         pageContent[kV[0]][array.name].push(dict);
-                                    } else{ 
+                                    } else{
                                         // If Content doesnt exist, create content and append data
                                         pageContent[kV[0]][array.name] = [dict];
                                     }

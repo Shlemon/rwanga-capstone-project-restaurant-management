@@ -1,12 +1,12 @@
 import './MenuDesignOne.css';
-import { Container, Row, Col, Card, Modal, Button } from 'react-bootstrap';
+import { Container, Row, Col, Card, Modal } from 'react-bootstrap';
 import React from 'react';
 
 
 function ItemModal({values, ...props})
 {
     return(
-        <Modal {...props} size='lg' aria-labeledby='contained-modal-title-vcenter' centered>
+        <Modal {...props} size='lg' aria-labelledby='contained-modal-title-vcenter' centered>
             <Modal.Header closeButton/>
             <Modal.Body>
                 <Row>

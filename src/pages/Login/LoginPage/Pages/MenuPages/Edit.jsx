@@ -2,12 +2,13 @@ import './Add.css';
 import { Row, Col } from 'react-bootstrap';
 
 import React from 'react';
-import { UpdateMenuAdd, UpdateCategoryAdd } from '../../../../../components/firestore-ops/MainQueries';
+import { UpdateCategoryEditCategory, UpdateCategoryEditContent, UpdateCategoryEditItem } from '../../../../../components/firestore-ops/MainQueries';
 
-import { Formik, Field, Form, ErrorMessage, useField, useFormikContext} from 'formik';
+import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import DynamicSelect from '../../../../../components/forms/FormikForms/DynamicSelect';
 import DynamicItemSelect from '../../../../../components/forms/FormikForms/DynamicItemSelect';
+import ColumnStructure from '../../../../../components/forms/FormikForms/ColumnStructure';
 import DataHive from '../DataHive';
 
 
@@ -25,109 +26,134 @@ export default function MenuEdit() {
                     createItemIn: '',
                     contentType: '',
                     itemName: '',
-                    itemDescription: '',
+                    newItemName: '',
                 }}
                 validationSchema={Yup.object({
                     createItemIn: Yup.string().required('Required'),
                     contentType: Yup.string().required('Required'),
                     itemName: Yup.string().required('Required'),
-                    itemDescription: Yup.string().required('Required'),
+                    newItemName: Yup.string().required('Required'),
                 })}
-                onSubmit={(values, { setSubmitting }) => {
-                    setTimeout(() => {
-                        console.log('Data ', values);
-                        alert(JSON.stringify(values, null, 2));
-                        UpdateMenuAdd(values);
-                        setSubmitting(false);
-                    }, 400)
+                onSubmit={(values, {setSubmitting}) => {
+                    alert(JSON.stringify(values, null, 2));
+                    UpdateCategoryEditItem(values);
                 }}
             >
                 {formik => (
                     <Form onSubmit={formik.handleSubmit} className='my-5'>
-                        <Row className='mb-3'>
-                            <Col md={5} className='text-end' id='col-break'><label htmlFor='createItemIn'>Item Category</label></Col>
-                            <Col md={5} className='text-start' id='col-break'>
+                        <ColumnStructure cdata={{
+                            name: 'createItemIn',
+                            title: 'Select Category',
+                            injection: (
                                 <Field as='select' name='createItemIn' id='field-width'>
+                                    <option/>
+                                    {hive.getHeaderTitle().map((title)=> {
+                                        return <option value={title}>{title}</option>
+                                    })}
+                                </Field>
+                            )
+                        }}/>
+                        <ColumnStructure cdata={{
+                            name: 'contentType',
+                            title: 'Content Type',
+                            injection: (<DynamicSelect children={hive.getContentTitles()} name='contentType' id='field-width'/>)
+                        }}/>
+                        <ColumnStructure cdata={{
+                            name: 'itemName',
+                            title: 'Item name',
+                            injection: (<DynamicItemSelect children={hive.getContentBody()} name='itemName' id='field-width'/>)
+                        }}/>
+                        <ColumnStructure cdata={{
+                            name: 'newItemName',
+                            title: 'New Name',
+                            injection: (<Field as='input' name='newItemName' id='field-width'/>)
+                        }}/>
+                        <Row><Col md={12} className='d-flex justify-content-center'><button type='submit' className='btn-42'>Save Changes</button></Col></Row>
+                    </Form>
+                )}
+            </Formik>
+            <hr/>
+            <h1 className='mt-3 mb-5' id='header-break' style={{fontSize: '30px'}}>Edit <br/>Category</h1>
+            <Formik
+                initialValues={{
+                    selectedCategory: '',
+                    newCategory: '',
+                }}
+                validationSchema={Yup.object({
+                    selectedCategory: Yup.string().required('Required'),
+                    newCategory: Yup.string().required('Required'),
+                })}
+                onSubmit={(values, {setSubmitting}) => {
+                    alert('Changed category name successfully!');
+                    UpdateCategoryEditCategory(values);
+                }}
+            >
+                {formik => (
+                    <Form onSubmit={formik.handleSubmit} className='my-5'>
+                        <ColumnStructure cdata={{
+                            name: 'selectedCategory',
+                            title: 'Select Category',
+                            injection: (
+                                <Field as='select' name='selectedCategory' id='field-width'>
                                     <option/>
                                     {hive.getHeaderTitle().map((title) => {
                                         return <option value={title}>{title}</option>
                                     })}
                                 </Field>
-                            </Col>
-                            <Col md={2} id='col-break'><ErrorMessage name='createItemIn'/></Col>
-                        </Row>
-
-                        <Row className='mb-3'>
-                            <Col md={5} className='text-end' id='col-break'><label htmlFor='contentType'>Content Type</label></Col>
-                            <Col md={5} className='text-start' id='col-break'>
-                                <DynamicSelect children={hive.getContentTitles()} name='contentType' id='field-width'/>
-                                </Col>
-                            <Col md={2} id='col-break'><ErrorMessage name='contentType'/></Col>
-                        </Row>
-
-                        <Row className='mb-3'>
-                            <Col md={5} className='text-end' id='col-break'><label htmlFor='itemName'>Item Name</label></Col>
-                            <Col md={5} className='text-start' id='col-break'>
-                                <DynamicItemSelect children={hive.getContentBody()} name='itemName' id='field-width'/>
-                                </Col>
-                            <Col md={2} id='col-break'><ErrorMessage name='itemName'/></Col>
-                        </Row>
-                        
-                        <button type='submit'>Save Changes</button>
-                    </Form>
+                            )
+                        }}/>
+                        <ColumnStructure cdata={{
+                            name: 'newCategory',
+                            title: 'New Category',
+                            injection: (<Field as='input' name='newCategory' id='field-width'/>)
+                        }}/>
+                        <Row><Col md={12} className='d-flex justify-content-center'><button type='submit' className='btn-42'>Save Changes</button></Col></Row>
+                </Form>
                 )}
             </Formik>
             <hr/>
-            <h1 className='mt-3 mb-5' id='header-break' style={{fontSize: '30px'}}>Edit Category</h1>
-            <Formik
+            <h1 className='mt-3 mb-5' id='header-break' style={{fontSize: '30px'}}>Edit Content Type</h1>
+            <Formik 
                 initialValues={{
-                    newCategory: '',
+                    createItemIn: '',
                     contentType: '',
-                    itemName: '',
-                    itemDescription: '',
+                    newItemName: '',
                 }}
                 validationSchema={Yup.object({
-                    newCategory: Yup.string().required('Required'),
+                    createItemIn: Yup.string().required('Required'),
                     contentType: Yup.string().required('Required'),
-                    itemName: Yup.string().required('Required'),
-                    itemDescription: Yup.string().required('Required'),
+                    newItemName: Yup.string().required('Required').max(12, 'Text length must be 12 or less!'),
                 })}
                 onSubmit={(values, {setSubmitting}) => {
                     alert(JSON.stringify(values, null, 2));
-                    UpdateCategoryAdd(values);
+                    UpdateCategoryEditContent(values);
                 }}
             >
                 {formik => (
                     <Form onSubmit={formik.handleSubmit} className='my-5'>
-                    <Row className='mb-3'>
-                        <Col md={5} className='text-end' id='col-break'><label htmlFor='newCategory'>New Category</label></Col>
-                        <Col md={5} className='text-start' id='col-break'>
-                            <Field as='input' name='newCategory' id='field-width'/>
-                        </Col>
-                        <Col md={2} id='col-break'><ErrorMessage name='newCategory'/></Col>
-                    </Row>
-
-                    <Row className='mb-3'>
-                        <Col md={5} className='text-end' id='col-break'><label htmlFor='contentType'>Content Type</label></Col>
-                        <Col md={5} className='text-start' id='col-break'>
-                            <Field name='contentType' id='field-width' as='input' placeholder='For The Hands...'/>
-                            </Col>
-                        <Col md={2} id='col-break'><ErrorMessage name='contentType'/></Col>
-                    </Row>
-
-                    <Row className='mb-3'>
-                        <Col md={5} className='text-end' id='col-break'><label htmlFor='itemName'>Item name</label></Col>
-                        <Col md={5} className='text-start' id='col-break'><Field as='textarea' name='itemName' id='field-width'/></Col>
-                        <Col md={2} id='col-break'><ErrorMessage name='itemName'/></Col>
-                    </Row>
-
-                    <Row className='mb-3'>
-                        <Col md={5} className='text-end' id='col-break'><label htmlFor='itemDescription'>Item Description</label></Col>
-                        <Col md={5} className='text-start' id='col-break'><Field as='textarea' name='itemDescription' id='field-width'/></Col>
-                        <Col md={2} id='col-break'><ErrorMessage name='itemDescription'/></Col>
-                    </Row>
-                    <button type='submit'>Save Changes</button>
-                </Form>
+                        <ColumnStructure cdata={{
+                            name: 'createItemIn',
+                            title: 'Select Category',
+                            injection: (
+                            <Field as='select' name='createItemIn' id='field-width'>
+                                <option/>
+                                {hive.getHeaderTitle().map((title) => {
+                                    return <option value={title}>{title}</option>
+                                })}
+                            </Field>)
+                        }}/>
+                        <ColumnStructure cdata={{
+                            name: 'contentType',
+                            title: 'Content Type',
+                            injection: (<DynamicSelect children={hive.getContentTitles()} name='contentType' id='field-width'/>)
+                        }}/>
+                        <ColumnStructure cdata={{
+                            name: 'newItemName',
+                            title: 'New Name',
+                            injection: (<Field as='input' name='newItemName' id='field-width'/>)
+                        }}/>
+                        <Row><Col md={12} className='d-flex justify-content-center'><button type='submit' className='btn-42'>Save Changes</button></Col></Row>
+                    </Form>
                 )}
             </Formik>
         </React.Fragment>

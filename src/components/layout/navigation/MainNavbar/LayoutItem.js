@@ -1,9 +1,7 @@
 import './LayoutItem.css';
 import { Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
-
-import { useSelector, useDispatch } from 'react-redux';
-import { logout } from '../../../../redux-store/slices/authenticationSlice';
+import { useSelector } from 'react-redux';
 
 export function LayoutItem(props) {
     return(

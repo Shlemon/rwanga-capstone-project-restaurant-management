@@ -90,7 +90,7 @@ export async function FactoryReset() {
     pagesSnap.forEach(
         (dbDoc) => {
             if(dbDoc.id === 'index'){
-                console.log('Skipping index')
+                console.log('')
             } else {
                 deleteDoc(doc(db, `${pagePath}/${dbDoc.id}`))
                 deleteDoc(doc(db, `${routePath}/${dbDoc.id}`))
@@ -103,9 +103,6 @@ export async function FactoryReset() {
 
     // Get default documents
     const [pageData, routeData ] = await QueryCollectionData('pages/menu-pages/default/pages/public', 'pages/menu-pages/default/routes/public', false);
-
-    console.log('Route data ', routeData);
-    console.log('Page data ', pageData);
 
     Object.entries(pageData).forEach(
         async(dbDoc) => {
@@ -136,7 +133,6 @@ export async function UpdateMenuAdd(metaData) {
 
     // Read Document
     const pageData = pageSnap.data().pageContent;
-    console.log('PageDataRoot ', pageData);
 
     const newItem = {
         name: metaData.itemName,
@@ -195,6 +191,72 @@ export async function UpdateCategoryAdd(metaData) {
         route: metaData.newCategory,
         eventkey: `link-${metaData.newCategory}`
     })
+}
+
+export async function UpdateCategoryEditCategory(metaData) {
+    const pageRef = doc(db, `pages/menu-pages/dynamic/pages/public/${metaData.selectedCategory}`);
+    const routeRef = doc(db, `pages/menu-pages/dynamic/routes/public/${metaData.selectedCategory}`);
+
+    // New Routes
+    const newPage = doc(db, `pages/menu-pages/dynamic/pages/public/${metaData.newCategory}`);
+    const newRoute = doc(db, `pages/menu-pages/dynamic/routes/public/${metaData.newCategory}`);
+
+    // Get the document
+    let pageSnap = await getDoc(pageRef);
+    pageSnap = pageSnap.data();
+    pageSnap.pageName = metaData.newCategory;
+
+    // Delete Document
+    await deleteDoc(pageRef);
+    await deleteDoc(routeRef);
+
+    // Create new document with new category name(with same old data)
+    await setDoc(newPage, pageSnap);
+    await setDoc(newRoute, {
+        title: metaData.newCategory,
+        route: metaData.newCategory,
+        eventkey: `link-${metaData.newCategory}`,
+    });
+}
+
+export async function UpdateCategoryEditItem(metaData) {
+    const pageRef = doc(db, `pages/menu-pages/dynamic/pages/public/${metaData.createItemIn}`);
+
+    // Get the document
+    let pageSnap = await getDoc(pageRef);
+    pageSnap = pageSnap.data();
+
+    pageSnap.pageContent.forEach(
+        (array) => {
+            array.items.forEach(
+                (index) => {
+                    if(index.name === metaData.itemName){
+                        index.name = metaData.newItemName;
+                    }})
+                }
+            )
+
+    // Create new document with new category name(with same old data)
+    await setDoc(pageRef, pageSnap);
+}
+
+export async function UpdateCategoryEditContent(metaData) {
+    const pageRef = doc(db, `pages/menu-pages/dynamic/pages/public/${metaData.createItemIn}`);
+
+    // Get the document
+    let pageSnap = await getDoc(pageRef);
+    pageSnap = pageSnap.data();
+
+    pageSnap.pageContent.forEach(
+        (array) => {
+            if(array.name === metaData.contentType){
+                array.name = metaData.newItemName;
+            }
+        }
+    )
+
+    // Create new document with new category name(with same old data)
+    await setDoc(pageRef, pageSnap);
 }
 
 // Query - Set

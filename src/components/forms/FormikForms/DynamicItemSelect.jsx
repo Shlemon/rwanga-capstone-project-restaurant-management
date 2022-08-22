@@ -1,5 +1,5 @@
 import React from "react";
-import { useField, useFormikContext, Field } from "formik";
+import { useField, useFormikContext, Field, setFieldValue } from "formik";
 
 
 const DynamicItemSelect = ({children, ...props}) => {
@@ -15,21 +15,17 @@ const DynamicItemSelect = ({children, ...props}) => {
         // First, reset the data storage
         setData([]);
 
-        console.log('iteration array, ', children);
         Object.entries(children).map((child) => {
             if(child[0] === createItemIn){
                 Object.entries(child[1]).forEach(
                     (array) => {
-                        console.log('Content type ', contentType);
                         if(array[0] === contentType){
-                            console.log('Inside')
                             array[1].forEach(
                                 (itemEntry) => {
                                     setData(prevData => [...prevData, itemEntry]);
                                 }
                             )
                         }
-
                 })
             }
         })

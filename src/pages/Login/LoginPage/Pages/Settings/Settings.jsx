@@ -4,7 +4,7 @@ import { Row, Col, Modal, Button } from 'react-bootstrap';
 import React from 'react';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { FactoryReset } from '../../../../../components/firestore-ops/MainQueries';
+// import { FactoryReset } from '../../../../../components/firestore-ops/MainQueries';
 
 
 const initialValues = {
@@ -63,7 +63,9 @@ export default function MenuSettings() {
                             handleClose: handleClose,
                             handleConfirm: handleConfirm,
                         }}/>
-                        <button type='submit' className='bg-danger text-white'>Reset</button>
+                        <Row>
+                            <Col md={12} className='d-flex justify-content-center'><button type='submit' className='btn-42'>Save Changes</button></Col>
+                        </Row>
                     </Form>
                 )}
         </Formik>
