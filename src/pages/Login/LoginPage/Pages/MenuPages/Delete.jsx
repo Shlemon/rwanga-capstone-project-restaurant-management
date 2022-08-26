@@ -1,3 +1,6 @@
+// Implement ConfirmationModal to all Field
+// as extra validation step
+
 import './Add.css';
 import { Row, Col } from 'react-bootstrap';
 
@@ -9,18 +12,21 @@ import * as Yup from 'yup';
 import DynamicSelect from '../../../../../components/forms/FormikForms/DynamicSelect';
 import DynamicItemSelect from '../../../../../components/forms/FormikForms/DynamicItemSelect';
 import ColumnStructure from '../../../../../components/forms/FormikForms/ColumnStructure';
+
 import DataHive from '../DataHive';
+// import ConfirmationModal from '../../../../../components/modals/ConfirmationModal';
 
 
 export default function MenuDelete() {
     // This code can be minimized big time
     // by using custom field.
     // ...ill just do this shit later
+    const [showModal, setShowModal] = React.useState(false);
     const hive = new DataHive();
 
     return(
         <React.Fragment>
-            <h1 className='mt-3' id='header-break' style={{fontSize: '30px'}}>Delete Item</h1>
+            <h1 className='mt-3' id='header-break' style={{fontSize: '30px'}}>Delete <br/>Item</h1>
             <Formik 
                 initialValues={{
                     createItemIn: '',
@@ -98,7 +104,7 @@ export default function MenuDelete() {
                 )}
             </Formik>
             <hr/>
-            <h1 className='mt-3 mb-5' id='header-break' style={{fontSize: '30px'}}>Delete Content Type</h1>
+            <h1 className='mt-3 mb-5' id='header-break' style={{fontSize: '30px'}}>Delete <br/>Content Type</h1>
             <Formik 
                 initialValues={{
                     createItemIn: '',

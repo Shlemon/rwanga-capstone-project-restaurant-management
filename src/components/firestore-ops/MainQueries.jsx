@@ -56,6 +56,31 @@ export async function GetDynamicMenuPages()
 }
 
 // Query - Get
+export async function GetDynamicHomePages(useSnapshot) {
+    const itemData = [];
+    const itemColRef = collection(db, 'pages/home-pages/dynamic/');
+    let itemDocSnap = undefined;
+
+    if(useSnapshot){
+        itemDocSnap = onSnapshot(itemColRef);
+    } else{
+        itemDocSnap = await getDocs(itemColRef);
+    }
+
+    itemDocSnap.forEach(
+        (doc) => {
+            if(doc.id === 'index'){
+                //pass
+            } else{
+                itemData[doc.id] = doc.data();
+            }
+        }
+    )
+    
+    return itemData;
+}
+
+// Query - Get
 export async function GetMainPages()
 {
     // Temp data holders
@@ -76,7 +101,202 @@ export async function GetMainPages()
 }
 
 // Query - Set
-export async function FactoryReset() {
+export async function AddMenuItem(metaData) {
+    // Define which document to get
+    const pageRef = doc(db, `pages/menu-pages/dynamic/pages/public/${metaData.createItemIn}`);
+
+    // Get the document
+    const pageSnap = await getDoc(pageRef);
+
+    // Read Document
+    const pageData = pageSnap.data().pageContent;
+
+    const newItem = {
+        name: metaData.itemName,
+        ingredients: metaData.itemDescription,
+        image: '',
+        price: 0
+    }
+
+    // Add to Pages
+    pageData.forEach(
+        (array) => {
+            if(array.name === metaData.contentType){
+                if(metaData.resetMenu){
+                    let notFound = true;
+                    array.forEach(
+                        (arrayItem) => {
+                            if(arrayItem.name === metaData.itemName){
+                                // Update this specific index
+                                arrayItem = newItem;
+                                notFound = false;
+                            }
+                        }
+                    )
+                    if(notFound){
+                        array.items.push(newItem)
+                    }
+                } else {
+                    array.items.push(newItem)
+                }
+            }
+        }
+    )
+    await setDoc(pageRef, {
+        pageName: metaData.createItemIn,
+        pageContent: pageData,
+    });
+}
+
+// Query - Set
+export async function AddMenuCategory(metaData) {
+    const pageRef = doc(db, `pages/menu-pages/dynamic/pages/public/${metaData.newCategory}`);
+    const routeRef = doc(db, `pages/menu-pages/dynamic/routes/public/${metaData.newCategory}`);
+
+    await setDoc(pageRef, {
+        pageName: metaData.newCategory,
+        pageContent: [
+            {
+                name: metaData.contentType,
+                items: [
+                    {name: metaData.itemName, ingredients: metaData.itemDescription, image: '', price: 0},
+                ]
+            }              
+        ]
+    });
+    await setDoc(routeRef, {
+        title: metaData.newCategory,
+        route: metaData.newCategory,
+        eventkey: `link-${metaData.newCategory}`
+    })
+}
+
+// Query - Set
+export async function AddMenuContentType(metaData) {
+    // Define which document to get
+    const pageRef = doc(db, `pages/menu-pages/dynamic/pages/public/${metaData.createItemIn}`);
+
+    // Get the document
+    const pageSnap = await getDoc(pageRef);
+
+    // Read Document and update it
+    const pageData = pageSnap.data().pageContent;
+
+    pageData.push({name: metaData.contentType, items: []})
+
+    await setDoc(pageRef, {
+        pageName: metaData.createItemIn,
+        pageContent: pageData,
+    });
+}
+
+// Query - Set_Delete
+// NEW FUNCTION FORMAT TO MINIMIZE CODE AND PROMOTE REUSABILITY
+export async function EditMenuCategory({mode, ...metaData}) {
+    // Routes and document to delete
+    const pageRef = doc(db, `pages/menu-pages/dynamic/pages/public/${metaData.selectedCategory}`);
+    const routeRef = doc(db, `pages/menu-pages/dynamic/routes/public/${metaData.selectedCategory}`);
+
+    // Get the document(if mode is edit, these will be used otherwise they will be ignored)
+    let pageSnap = await getDoc(pageRef);
+    pageSnap = pageSnap.data();
+    pageSnap.pageName = metaData.newCategory;
+
+    // Delete Document
+    await deleteDoc(pageRef);
+    await deleteDoc(routeRef);
+
+    if(mode === 'edit'){
+        // New Routes
+        const newPage = doc(db, `pages/menu-pages/dynamic/pages/public/${metaData.newCategory}`);
+        const newRoute = doc(db, `pages/menu-pages/dynamic/routes/public/${metaData.newCategory}`);
+
+        // Create new document with new category name(with same old data)
+        await setDoc(newPage, pageSnap);
+        await setDoc(newRoute, {
+            title: metaData.newCategory,
+            route: metaData.newCategory.replaceAll(" ", ""),
+            eventkey: `link-${metaData.newCategory.replaceAll(" ", "")}`,
+        });
+    } else if(mode === 'delete') {
+        //pass
+    }
+}
+
+// Query - Set_Delete
+export async function EditMenuItem({mode, ...metaData}) {
+    const pageRef = doc(db, `pages/menu-pages/dynamic/pages/public/${metaData.createItemIn}`);
+
+    // Get the document
+    let pageSnap = await getDoc(pageRef);
+    pageSnap = pageSnap.data();
+
+    pageSnap.pageContent.forEach(
+        (array) => {
+            array.items.forEach(
+                (index, id) => {
+                    if(index.name === metaData.itemName){
+                        if(mode === 'edit'){
+                            index.name = metaData.newItemName;
+                        } else if(mode === 'delete'){
+                            array.items.splice(id, 1);
+                        }
+                    }})
+                }
+            )
+    // Create new document with new category name(with same old data)
+    await setDoc(pageRef, pageSnap);
+}
+
+// Query - Set_Delete
+export async function EditMenuContent({mode, ...metaData}) {
+    const pageRef = doc(db, `pages/menu-pages/dynamic/pages/public/${metaData.createItemIn}`);
+
+    // Get the document
+    let pageSnap = await getDoc(pageRef);
+    pageSnap = pageSnap.data();
+
+    pageSnap.pageContent.forEach(
+        (array, id) => {
+            if(array.name === metaData.contentType){
+                if(mode === 'edit'){
+                    array.name = metaData.newItemName;
+                } else if(mode === 'delete'){
+                    pageSnap.pageContent.splice(id, 1);
+                }
+            }
+        }
+    )
+
+    // Create new document with new category name(with same old data)
+    await setDoc(pageRef, pageSnap);
+}
+
+// Query - Set
+// DONT USE THIS FUNCTION
+export function SetDefault()
+{
+    const curItem = PagesObject();
+
+    curItem.forEach(
+        (menu) => {
+            const docRefPage = doc(db, 'pages', 'menu-pages', 'default', 'pages', 'public', menu.pageName);
+            const docRefRoute = doc(db, 'pages', 'menu-pages', 'default', 'routes', 'public', menu.pageName);
+
+            setDoc(docRefPage, {
+                pageName: menu.pageName,
+                pageContent: menu.pageContent,
+            })
+            setDoc(docRefRoute, {
+                title: menu.pageName,
+                route: menu.pageName,
+                eventkey: `link-${menu.pageName}`,
+            })
+        }
+    )
+}
+
+const ResetMenu = async() => {
     const pagePath = 'pages/menu-pages/dynamic/pages/public';
     const routePath = 'pages/menu-pages/dynamic/routes/public';
 
@@ -124,192 +344,46 @@ export async function FactoryReset() {
     )
 }
 
-export async function AddMenuItem(metaData) {
-    // Define which document to get
-    const pageRef = doc(db, `pages/menu-pages/dynamic/pages/public/${metaData.createItemIn}`);
+const ResetHomepage = async() => {
+    const defaultPath = 'pages/home-pages/default';
+    const dynamicPath = 'pages/home-pages/dynamic';
 
-    // Get the document
-    const pageSnap = await getDoc(pageRef);
+    const defaultColRef = collection(db, defaultPath);
+    const dynamicColRef = collection(db, dynamicPath);
 
-    // Read Document
-    const pageData = pageSnap.data().pageContent;
+    // Get and Reset dynamic collection
+    let homepageSnap = await getDocs(dynamicColRef);
 
-    const newItem = {
-        name: metaData.itemName,
-        ingredients: metaData.itemDescription,
-        image: '',
-        price: 0
-    }
-
-    // Add to Pages
-    pageData.forEach(
-        (array) => {
-            if(array.name === metaData.contentType){
-                if(metaData.isChecked){
-                    let notFound = true;
-                    array.forEach(
-                        (arrayItem) => {
-                            if(arrayItem.name === metaData.itemName){
-                                // Update this specific index
-                                arrayItem = newItem;
-                                notFound = false;
-                            }
-                        }
-                    )
-                    if(notFound){
-                        array.items.push(newItem)
-                    }
-                } else {
-                    array.items.push(newItem)
-                }
-            }
+    // Clear Dynamic Collection
+    homepageSnap.forEach(async(dbDoc) => {
+        if(dbDoc.id === 'index'){
+            //pass
+        } else {
+            deleteDoc(doc(db, `${dynamicPath}/${dbDoc.id}`));
         }
-    )
-    await setDoc(pageRef, {
-        pageName: metaData.createItemIn,
-        pageContent: pageData,
-    });
-}
+    })
 
-export async function AddMenuCategory(metaData) {
-    const pageRef = doc(db, `pages/menu-pages/dynamic/pages/public/${metaData.newCategory}`);
-    const routeRef = doc(db, `pages/menu-pages/dynamic/routes/public/${metaData.newCategory}`);
-
-    await setDoc(pageRef, {
-        pageName: metaData.newCategory,
-        pageContent: [
-            {
-                name: metaData.contentType,
-                items: [
-                    {name: metaData.itemName, ingredients: metaData.itemDescription, image: '', price: 0},
-                ]
-            }              
-        ]
-    });
-    await setDoc(routeRef, {
-        title: metaData.newCategory,
-        route: metaData.newCategory,
-        eventkey: `link-${metaData.newCategory}`
+    // Get Default documents and fill in
+    homepageSnap = await getDocs(defaultColRef);
+    homepageSnap.forEach(async(dbDoc) => {
+        if(dbDoc.id === 'index') {
+            //pass
+        } else {
+            await setDoc(doc(db, `${dynamicPath}/${dbDoc.id}`), dbDoc.data());
+        }
     })
 }
 
-export async function AddMenuContentType(metaData) {
-    // Define which document to get
-    const pageRef = doc(db, `pages/menu-pages/dynamic/pages/public/${metaData.createItemIn}`);
-
-    // Get the document
-    const pageSnap = await getDoc(pageRef);
-
-    // Read Document and update it
-    const pageData = pageSnap.data().pageContent;
-
-    pageData.push({name: metaData.contentType, items: []})
-
-    await setDoc(pageRef, {
-        pageName: metaData.createItemIn,
-        pageContent: pageData,
-    });
-}
-
-// NEW FUNCTION FORMAT TO MINIMIZE CODE AND PROMOTE REUSABILITY
-export async function EditMenuCategory({mode, ...metaData}) {
-    // Routes and document to delete
-    const pageRef = doc(db, `pages/menu-pages/dynamic/pages/public/${metaData.selectedCategory}`);
-    const routeRef = doc(db, `pages/menu-pages/dynamic/routes/public/${metaData.selectedCategory}`);
-
-    // Get the document(if mode is edit, these will be used otherwise they will be ignored)
-    let pageSnap = await getDoc(pageRef);
-    pageSnap = pageSnap.data();
-    pageSnap.pageName = metaData.newCategory;
-
-    // Delete Document
-    await deleteDoc(pageRef);
-    await deleteDoc(routeRef);
-
-    if(mode === 'edit'){
-        // New Routes
-        const newPage = doc(db, `pages/menu-pages/dynamic/pages/public/${metaData.newCategory}`);
-        const newRoute = doc(db, `pages/menu-pages/dynamic/routes/public/${metaData.newCategory}`);
-
-        // Create new document with new category name(with same old data)
-        await setDoc(newPage, pageSnap);
-        await setDoc(newRoute, {
-            title: metaData.newCategory,
-            route: metaData.newCategory.replaceAll(" ", ""),
-            eventkey: `link-${metaData.newCategory.replaceAll(" ", "")}`,
-        });
-    } else if(mode === 'delete') {
-        //pass
-    }
-}
-
-export async function EditMenuItem({mode, ...metaData}) {
-    const pageRef = doc(db, `pages/menu-pages/dynamic/pages/public/${metaData.createItemIn}`);
-
-    // Get the document
-    let pageSnap = await getDoc(pageRef);
-    pageSnap = pageSnap.data();
-
-    pageSnap.pageContent.forEach(
-        (array) => {
-            array.items.forEach(
-                (index, id) => {
-                    if(index.name === metaData.itemName){
-                        if(mode === 'edit'){
-                            index.name = metaData.newItemName;
-                        } else if(mode === 'delete'){
-                            array.items.splice(id, 1);
-                        }
-                    }})
-                }
-            )
-    // Create new document with new category name(with same old data)
-    await setDoc(pageRef, pageSnap);
-}
-
-export async function EditMenuContent({mode, ...metaData}) {
-    const pageRef = doc(db, `pages/menu-pages/dynamic/pages/public/${metaData.createItemIn}`);
-
-    // Get the document
-    let pageSnap = await getDoc(pageRef);
-    pageSnap = pageSnap.data();
-
-    pageSnap.pageContent.forEach(
-        (array, id) => {
-            if(array.name === metaData.contentType){
-                if(mode === 'edit'){
-                    array.name = metaData.newItemName;
-                } else if(mode === 'delete'){
-                    pageSnap.pageContent.splice(id, 1);
-                }
-            }
-        }
-    )
-
-    // Create new document with new category name(with same old data)
-    await setDoc(pageRef, pageSnap);
-}
-
 // Query - Set
-// DONT USE THIS FUNCTION
-export function SetDefault()
-{
-    const curItem = PagesObject();
+export async function FactoryReset(metaData) {
+    const promiseList = [];
 
-    curItem.forEach(
-        (menu) => {
-            const docRefPage = doc(db, 'pages', 'menu-pages', 'default', 'pages', 'public', menu.pageName);
-            const docRefRoute = doc(db, 'pages', 'menu-pages', 'default', 'routes', 'public', menu.pageName);
-
-            setDoc(docRefPage, {
-                pageName: menu.pageName,
-                pageContent: menu.pageContent,
-            })
-            setDoc(docRefRoute, {
-                title: menu.pageName,
-                route: menu.pageName,
-                eventkey: `link-${menu.pageName}`,
-            })
-        }
-    )
+    if(metaData.resetMenu){
+        promiseList.push(ResetMenu);
+    }
+    if(metaData.resetHomepage){
+        promiseList.push(ResetHomepage);
+    }
+    
+    await Promise.all([promiseList.forEach((f) => f())]);
 }

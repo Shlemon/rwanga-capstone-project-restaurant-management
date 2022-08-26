@@ -1,20 +1,26 @@
-import { GetDynamicMenuPages, GetMainPages } from '../firestore-ops/MainQueries';
+import { GetDynamicMenuPages, GetMainPages, GetDynamicHomePages } from '../firestore-ops/MainQueries';
 
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { updatePages, updateRoutes } from '../../redux-store/slices/menuPagesSlice';
 import { updateMainRoutes } from '../../redux-store/slices/mainPagesSlice';
+import { updateHomepages } from '../../redux-store/slices/homepageSlice';
 
 
 export default async function InitializeSlices()
 {
     const dispatch = useDispatch();
-    const result = await Promise.all([GetDynamicMenuPages(), GetMainPages()]);
+    const result = await Promise.all([GetDynamicMenuPages(), GetMainPages(), GetDynamicHomePages()]);
 
-    const menuPages = result[0];
-    const mainPages = result[1];
+    const data = {
+        menuPages: result[0],
+        mainPages: result[1],
+        homePages: result[2],
+    }
 
-    dispatch(updatePages(menuPages[0]));
-    dispatch(updateRoutes(menuPages[1]));
+    dispatch(updatePages(data.menuPages[0]));
+    dispatch(updateRoutes(data.menuPages[1]));
     
-    dispatch(updateMainRoutes(mainPages));
+    dispatch(updateMainRoutes(data.mainPages));
+
+    dispatch(updateHomepages(data.homePages));
 }

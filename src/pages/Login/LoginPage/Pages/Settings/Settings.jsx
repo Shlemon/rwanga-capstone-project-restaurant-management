@@ -5,15 +5,17 @@ import { Row, Col, Modal, Button } from 'react-bootstrap';
 import { Formik, Field, Form } from 'formik';
 import * as Yup from 'yup';
 
-// import { FactoryReset } from '../../../../../components/firestore-ops/MainQueries';
+import { FactoryReset } from '../../../../../components/firestore-ops/MainQueries';
 import ColumnStructure from '../../../../../components/forms/FormikForms/ColumnStructure';
 
 
 const initialValues = {
-    isChecked: false,
+    resetMenu: false,
+    resetHomepage: false,
 };
 const validationSchema = Yup.object({
-    isChecked: Yup.bool().required('Required'),
+    resetMenu: Yup.bool().required('Required'),
+    resetHomepage: Yup.bool().required('Required'),
 });
 
 
@@ -37,36 +39,43 @@ const ConfirmationModal = (props) => {
 export default function MenuSettings() {
     const [showModal, setShowModal] = React.useState(false);
 
-    const handleShow = () => setShowModal(true);
-    const handleClose = () => setShowModal(false);
-    const handleConfirm = () => {
-        alert('RESETING...(Disabled)'); 
-        setShowModal(false);
-    }
+    // const handleShow = () => setShowModal(true);
+    // const handleClose = () => setShowModal(false);
+    // const handleConfirm = () => {
+    //     // alert('RESETING...(Disabled)');
+    //     // FactoryReset();
+    //     setShowModal(false);
+    // }
 
     return(
         <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
             onSubmit={(values, {setSubmitting}) => {
-                // alert(JSON.stringify(values, null, 2));
-                if(values.isChecked){
-                    handleShow();
+                // Make this work with Modal
+                if(values.resetMenu || values.resetHomepage){
+                    alert('Reseting');
+                    FactoryReset(values);
                 }
             }}
             >
                 {formik => (
                     <Form onSubmit={formik.handleSubmit} className='my-5'>
                         <ColumnStructure cdata={{
-                            name: 'isChecked',
+                            name: 'resetMenu',
                             title: 'Factory Reset Menu Settings',
-                            injection: (<Field type='checkbox' name='isChecked' id='field-width'/>)
+                            injection: (<Field type='checkbox' name='resetMenu' id='field-width'/>)
                         }}/>
-                        <ConfirmationModal p={{
+                        <ColumnStructure cdata={{
+                            name: 'resetHomepage',
+                            title: 'Factory Reset Homepage Stories Settings',
+                            injection: (<Field type='checkbox' name='resetHomepage' id='field-width'/>)
+                        }}/>
+                        {/* <ConfirmationModal p={{
                             show: showModal,
                             handleClose: handleClose,
                             handleConfirm: handleConfirm,
-                        }}/>
+                        }}/> */}
                         <Row><Col md={12} className='d-flex justify-content-center'><button type='submit' className='btn-42'>Save Changes</button></Col></Row>
                     </Form>
                 )}

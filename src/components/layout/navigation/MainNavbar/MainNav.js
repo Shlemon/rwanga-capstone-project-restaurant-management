@@ -13,7 +13,7 @@ export default function MainNav() {
     const isAuth = useSelector((state) => state.authentication.isAuthenticated);
     return(
         <React.Fragment>
-            <Container fluid style={{background: "#fffded"}} id='parent-container'>
+            <Container className='sticky-top' fluid style={{background: "#fffded"}} id='parent-container'>
                 <Navbar expand="sm" className='d-flex justify-content-center text-center align-items-center align-content-center'>
                     <Navbar.Brand className="fs-2 fw-bold" style={{color: '#95BDB2'}}>Lava Rest</Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" id='toggle-nav-1'/>

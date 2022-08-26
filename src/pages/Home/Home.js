@@ -2,12 +2,7 @@ import './Home.css';
 import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-
-// Import images here for now
-import drinks_img from '../../assets/main-menu/drinks.jpg';
-import beef_burger_img from '../../assets/stories/burger.png';
-import chicken_burger_img from '../../assets/stories/chicken-burger.png';
-import meat_saj_img from '../../assets/stories/meat-tantuni.png';
+import { useSelector } from 'react-redux';
 
 
 const HomepageFooter = () => {
@@ -36,13 +31,14 @@ const AboutInformationSplit = () =>
 
 const FirstCardCombo = (props) =>
 {
+    console.log('path: ', props.story.image);
     return(
         <React.Fragment>
-        <Col lg={6} id='left-first' style={{backgroundImage: `url(${props.story.image})`}}><Link to='/mainmenu' id='menu-as-link'>Menu</Link></Col>
+        <Col lg={6} id='left-first' style={{backgroundImage: `url(${props.story.image})`}}><Link to='/mainmenu' id='menu-as-link'>{props.story.item_title}</Link></Col>
         <Col lg={6} id='right-img-first'>
             <Row className='text-start ms-3 fw-bold'>
                 <Col xs={12} sm={12} md={12} lg={12} className='d-flex justify-content-start' id='body-section'>{props.story.body}</Col>
-                <Col xs={12} sm={12} md={12} lg={12} className='mt-4 d-flex justify-content-start'><Link to='/mainmenu' id='link-as-button'>{props.story.navDescription}</Link></Col>
+                <Col xs={12} sm={12} md={12} lg={12} className='mt-4 d-flex justify-content-start'><Link to='/mainmenu' id='link-as-button'>{props.story.button_title}</Link></Col>
             </Row>
         </Col>
         </React.Fragment>
@@ -56,15 +52,15 @@ const SecondCardCombo = (props) =>
         <Col lg={6} id='right-img-first' style={{backgroundColor: '#FCDFA0'}}>
             <Row className='text-start ms-3 fw-bold'>
                 <Col xs={12} sm={12} md={12} lg={12} className='d-flex justify-content-start' id='body-section'>{props.story.body}</Col>
-                <Col xs={12} sm={12} md={12} lg={12} className='mt-4 d-flex justify-content-start'><Link to='/mainmenu' id='link-as-button'>{props.story.navDescription}</Link></Col>
+                <Col xs={12} sm={12} md={12} lg={12} className='mt-4 d-flex justify-content-start'><Link to='/mainmenu' id='link-as-button'>{props.story.button_title}</Link></Col>
             </Row>
         </Col>
-        <Col lg={6} id='left-first' style={{backgroundImage: `url(${props.story.image})`}}><Link to='/mainmenu' id='menu-as-link'>Menu</Link></Col>
+        <Col lg={6} id='left-first' style={{backgroundImage: `url(${props.story.image})`}}><Link to='/mainmenu' id='menu-as-link'>{props.story.item_title}</Link></Col>
         </React.Fragment>
     );
 }
 
-const CreateHomepageStories = (props) => {
+const CreateHomepageStories = (stories) => {
     /* Setting Media Queries Programatically
        To change layout when breakpoint is hit */
     const matchVal = window.matchMedia('(max-width: 991.5px)');
@@ -79,7 +75,8 @@ const CreateHomepageStories = (props) => {
     });
     return(
         <React.Fragment>
-        {props.stories.map(function(storyIdx, storyIndex){
+        {Object.entries(stories).map((storyIdx, storyIndex) => {
+            storyIdx = storyIdx[1];
             if(isMatch || window.innerWidth <= 991.5){
                 return <Row key={storyIndex} className='text-center'><FirstCardCombo story={storyIdx} /></Row>;
             } else{
@@ -99,6 +96,8 @@ const Home = () => {
     // The First two cards won't change
     // for aesthetic reasons.
     // All subsequent cards must be dynamic and functional
+    const storiesData = useSelector((state) => state.homePages.pages);
+    console.log('images: ', storiesData);
     return(
         <React.Fragment>
         <Container fluid id='main-home-page'>
@@ -109,8 +108,7 @@ const Home = () => {
                 <AboutInformationSplit />
             </Row>
             {/* Create the first two Static Stories */}
-            <CreateHomepageStories stories={storiesStatic} />
-            <CreateHomepageStories stories={storiesData} />
+            <CreateHomepageStories {...storiesData} />
             {/* The Footer for displaying idk */}
             <HomepageFooter />
         </Container>
@@ -119,38 +117,3 @@ const Home = () => {
 };
 
 export default Home;
-
-
-// Ill put StoriesData here for now
-// until Firebase backend connection is established.
-const storiesStatic = [
-    {
-        body: 'Enjoy our current offering of delicious dishes, made with fresh ingredients.',
-        navDescription: 'View Menu',
-        image: drinks_img,
-    },
-    {
-        body: 'Introducing our new menu item, the Big Burger!',
-        navDescription: 'Learn More',
-        image: drinks_img,
-    }
-];
-
-
-const storiesData = [
-    {
-        body: 'Introducing our new menu item, the Big Burger!',
-        navDescription: 'Learn More',
-        image: beef_burger_img,
-    },
-    {
-        body: 'Introducing our new menu item, the Big Burger!',
-        navDescription: 'Learn More',
-        image: chicken_burger_img,
-    },
-    {
-        body: 'Introducing our new menu item, the Big Burger!',
-        navDescription: 'Learn More',
-        image: meat_saj_img,
-    },
-]

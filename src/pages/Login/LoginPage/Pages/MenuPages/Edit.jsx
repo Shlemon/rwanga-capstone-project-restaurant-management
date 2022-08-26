@@ -20,7 +20,7 @@ export default function MenuEdit() {
 
     return(
         <React.Fragment>
-            <h1 className='mt-3' id='header-break' style={{fontSize: '30px'}}>Edit Item</h1>
+            <h1 className='mt-3' id='header-break' style={{fontSize: '30px'}}>Edit <br/>Item</h1>
             <Formik 
                 initialValues={{
                     createItemIn: '',
@@ -112,7 +112,7 @@ export default function MenuEdit() {
                 )}
             </Formik>
             <hr/>
-            <h1 className='mt-3 mb-5' id='header-break' style={{fontSize: '30px'}}>Edit Content Type</h1>
+            <h1 className='mt-3 mb-5' id='header-break' style={{fontSize: '30px'}}>Edit <br/>Content Type</h1>
             <Formik 
                 initialValues={{
                     createItemIn: '',
