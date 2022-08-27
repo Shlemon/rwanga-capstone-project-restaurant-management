@@ -1,5 +1,6 @@
-import { db } from '../../Firebase/firestore-cloud';
+import { db, cloudStorage } from '../../Firebase/firestore-cloud';
 import { doc, collection, getDoc, getDocs, setDoc, deleteDoc, onSnapshot } from 'firebase/firestore';
+import { ref, listAll, getMetadata, getDownloadURL } from 'firebase/storage';
 import { PagesObject } from '../../pages/Menus/Default/MenuDesignOne/MenuPagesData/MenuPagesData';
 
 
@@ -56,7 +57,63 @@ export async function GetDynamicMenuPages()
 }
 
 // Query - Get
+export async function GetMainPages()
+{
+    // Temp data holders
+    const routeData = {};
+
+    // Firestore references
+    const routeDocRef = collection(db, 'pages', 'main-pages', 'first');
+
+    // Data collectors
+    const routesDocSnap = await getDocs(routeDocRef);
+
+    routesDocSnap.forEach(
+        doc => {
+            routeData[doc.id] = doc.data()
+        }
+    )
+    return routeData;
+}
+
+const GetImages = async() => {
+    const imagesRef = {
+        main_menu: ref(cloudStorage, 'main-menu'),
+        stories: ref(cloudStorage, 'stories'),
+        dishes: ref(cloudStorage, 'dishes'),
+    };
+    let images = {
+        main_menu: [],
+        stories: [],
+        dishes: [],
+    }
+    
+    Object.entries(imagesRef).forEach((category) => {
+        let name = category[0];
+        let contents = category[1];
+        listAll(contents).then(
+            (response) => {
+                console.log('RESPONSE ', response);
+                response.items.forEach(
+                    (item) => {
+                        let item_name = item.name.substring(0, item.name.length - 4).replaceAll('-', '_');
+                        getDownloadURL(item).then(
+                            (url) => {
+                                images[name][item_name] = url;
+                            }
+                        ).catch((error) => {console.log(error)})
+                    }
+                )
+            }
+        ).catch((error) => {console.log(error)})
+    })
+
+    return images;
+}
+
+// Query - Get
 export async function GetDynamicHomePages(useSnapshot) {
+    GetImages();
     const itemData = [];
     const itemColRef = collection(db, 'pages/home-pages/dynamic/');
     let itemDocSnap = undefined;
@@ -78,26 +135,6 @@ export async function GetDynamicHomePages(useSnapshot) {
     )
     
     return itemData;
-}
-
-// Query - Get
-export async function GetMainPages()
-{
-    // Temp data holders
-    const routeData = {};
-
-    // Firestore references
-    const routeDocRef = collection(db, 'pages', 'main-pages', 'first');
-
-    // Data collectors
-    const routesDocSnap = await getDocs(routeDocRef);
-
-    routesDocSnap.forEach(
-        doc => {
-            routeData[doc.id] = doc.data()
-        }
-    )
-    return routeData;
 }
 
 // Query - Set
