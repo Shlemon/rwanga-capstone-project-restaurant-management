@@ -1,8 +1,9 @@
+import React from 'react';
+import axios from 'axios';
 import { db, cloudStorage } from '../../Firebase/firestore-cloud';
 import { doc, collection, getDoc, getDocs, setDoc, deleteDoc, onSnapshot } from 'firebase/firestore';
 import { ref, listAll, getMetadata, getDownloadURL } from 'firebase/storage';
 import { PagesObject } from '../../pages/Menus/Default/MenuDesignOne/MenuPagesData/MenuPagesData';
-
 
 // Helper - Get
 async function QueryCollectionData(pathToPages, pathToRoutes, useSnapshot) {
@@ -32,7 +33,19 @@ async function QueryCollectionData(pathToPages, pathToRoutes, useSnapshot) {
 
     pagesDocSnap.forEach(
         doc => {
+            const responseData = doc.data();
             if(doc.id !== 'index'){
+                responseData.pageContent.forEach((subCat) => {
+                    subCat.items.forEach(async (item) => {
+                        const img = new Image();
+                        await axios.get(item.image, {responseType: 'blob'})
+                        .then((response) => {
+                            img.src = URL.createObjectURL(response.data);
+                        })
+                        item.image = img.src;
+                        console.log('Item: ', item);
+                    })
+                })
                 pageData[doc.id] = doc.data()
             }
         }
@@ -76,44 +89,26 @@ export async function GetMainPages()
     return routeData;
 }
 
-const GetImages = async() => {
-    const imagesRef = {
-        main_menu: ref(cloudStorage, 'main-menu'),
-        stories: ref(cloudStorage, 'stories'),
-        dishes: ref(cloudStorage, 'dishes'),
-    };
-    let images = {
-        main_menu: [],
-        stories: [],
-        dishes: [],
-    }
-    
-    Object.entries(imagesRef).forEach((category) => {
-        let name = category[0];
-        let contents = category[1];
-        listAll(contents).then(
-            (response) => {
-                console.log('RESPONSE ', response);
-                response.items.forEach(
-                    (item) => {
-                        let item_name = item.name.substring(0, item.name.length - 4).replaceAll('-', '_');
-                        getDownloadURL(item).then(
-                            (url) => {
-                                images[name][item_name] = url;
-                            }
-                        ).catch((error) => {console.log(error)})
-                    }
-                )
-            }
-        ).catch((error) => {console.log(error)})
-    })
 
-    return images;
-}
+// // TEST
+// export async function RequestImageFromStorage(imagePath){
+//     const responseData = await getDownloadURL(ref(cloudStorage, imagePath))
+//     .then(async (url) => {
+//         try {
+//             const response = await axios.get(url, { responseType: 'blob' });
+//             return URL.createObjectURL(response.data);
+//         } catch (error) {
+//             console.log('Axios:: ', error);
+//         }
+//     })
+//     .catch((error) => {
+//         console.log('CloudStorage:: ', error);
+//     })
+//     return responseData;
+// }
 
 // Query - Get
 export async function GetDynamicHomePages(useSnapshot) {
-    GetImages();
     const itemData = [];
     const itemColRef = collection(db, 'pages/home-pages/dynamic/');
     let itemDocSnap = undefined;
@@ -125,15 +120,23 @@ export async function GetDynamicHomePages(useSnapshot) {
     }
 
     itemDocSnap.forEach(
-        (doc) => {
+        async (doc) => {
+            const data = doc.data();
             if(doc.id === 'index'){
                 //pass
             } else{
-                itemData[doc.id] = doc.data();
+                itemData[doc.id] = data;
+                const img = new Image();
+                await axios.get(data.image, {responseType: 'blob'})
+                .then((response) => {
+                    img.src = URL.createObjectURL(response.data);
+                })
+                // const responseImg = await RequestImageFromStorage(itemData[doc.id].image);
+                itemData[doc.id].image = img.src;
             }
         }
     )
-    
+
     return itemData;
 }
 

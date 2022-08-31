@@ -10,7 +10,7 @@ const firebaseConfig = {
   storageBucket: process.env.REACT_APP_FIRESTORE_STORAGE_BUCKET,
   messagingSenderId: process.env.REACT_APP_FIRESTORE_SENDER_ID,
   appId: process.env.REACT_APP_FIRESTORE_APP_ID,
-  measurementId: process.env.REACT_APP_FIRESTORE_MEASUREMENT_ID
+  measurementId: process.env.REACT_APP_FIRESTORE_MEASUREMENT_ID,
 };
 
 // Initialize Firebase

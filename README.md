@@ -23,8 +23,22 @@ This project aims to digitalize restaurant menu and management of the business a
 - Firestore Database
 - Firebase Authentication
 - Firebase Cloud Storage
+- Google Cloud CLI
+
+## Frameworks
+
+- Bootstrap
+- React-Bootstrap
+
+## Libraries
+
+- React-Redux
+- Firebase
+- FirebaseUI
 - Formik
+- React-Router
 - Yup
+- Dotenv
 
 ## Features
 

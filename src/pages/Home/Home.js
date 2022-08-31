@@ -4,7 +4,6 @@ import { Container, Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-
 const HomepageFooter = () => {
     return (
         <React.Fragment>
@@ -31,7 +30,6 @@ const AboutInformationSplit = () =>
 
 const FirstCardCombo = (props) =>
 {
-    console.log('path: ', props.story.image);
     return(
         <React.Fragment>
         <Col lg={6} id='left-first' style={{backgroundImage: `url(${props.story.image})`}}><Link to='/mainmenu' id='menu-as-link'>{props.story.item_title}</Link></Col>
@@ -97,21 +95,21 @@ const Home = () => {
     // for aesthetic reasons.
     // All subsequent cards must be dynamic and functional
     const storiesData = useSelector((state) => state.homePages.pages);
-    console.log('images: ', storiesData);
+    console.log('Stories data: ', storiesData);
     return(
         <React.Fragment>
-        <Container fluid id='main-home-page'>
-            <Row>
-                <h1 id='main-img'>Lava Rest</h1>
-            </Row>
-            <Row id='information-section' className='my-5'>
-                <AboutInformationSplit />
-            </Row>
-            {/* Create the first two Static Stories */}
-            <CreateHomepageStories {...storiesData} />
-            {/* The Footer for displaying idk */}
-            <HomepageFooter />
-        </Container>
+            <Container fluid id='main-home-page'>
+                <Row>
+                    <h1 id='main-img'>Lava Rest</h1>
+                </Row>
+                <Row id='information-section' className='my-5'>
+                    <AboutInformationSplit />
+                </Row>
+                {/* Create the first two Static Stories */}
+                <CreateHomepageStories {...storiesData} />
+                {/* The Footer for displaying idk */}
+                <HomepageFooter />
+            </Container>
         </React.Fragment>
     );
 };
