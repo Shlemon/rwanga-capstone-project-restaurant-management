@@ -21,7 +21,7 @@ export default function MainNav() {
                         <Nav pills defaultActiveKey="/" className="gap-5 justify-content-center align-items-center" id='dropdown-nav-break'>
                             <LayoutItem data={layoutObjects.home} />
                             <LayoutItem data={layoutObjects.main_menu} />
-                            <LayoutItem data={layoutObjects.contact} />
+                            <LayoutItem data={layoutObjects.contact}/>
                             <LoginButton data={layoutObjects.login} />
                         </Nav>
                     </Navbar.Collapse>

@@ -26,7 +26,7 @@ export default function LoginPage()
     return(
         <React.Fragment>
             <MainRow />
-            <Row id='main-page-row'>
+            <Row id='main-page-row' className='min-vh-100'>
                 <Col xs={2} className='text-center text-white' id='vertical-navbar'>
                     <Sidebar/>
                 </Col>
