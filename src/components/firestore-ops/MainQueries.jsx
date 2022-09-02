@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { db, cloudStorage } from '../../Firebase/firestore-cloud';
 import { doc, collection, getDoc, getDocs, setDoc, deleteDoc, onSnapshot } from 'firebase/firestore';
-import { ref, listAll, getMetadata, getDownloadURL } from 'firebase/storage';
+import { ref, getDownloadURL, uploadString } from 'firebase/storage';
 import { PagesObject } from '../../pages/Menus/Default/MenuDesignOne/MenuPagesData/MenuPagesData';
 
 // Helper - Get
@@ -43,7 +43,6 @@ async function QueryCollectionData(pathToPages, pathToRoutes, useSnapshot) {
                             img.src = URL.createObjectURL(response.data);
                         })
                         item.image = img.src;
-                        console.log('Item: ', item);
                     })
                 })
                 pageData[doc.id] = doc.data()
@@ -89,24 +88,6 @@ export async function GetMainPages()
     return routeData;
 }
 
-
-// // TEST
-// export async function RequestImageFromStorage(imagePath){
-//     const responseData = await getDownloadURL(ref(cloudStorage, imagePath))
-//     .then(async (url) => {
-//         try {
-//             const response = await axios.get(url, { responseType: 'blob' });
-//             return URL.createObjectURL(response.data);
-//         } catch (error) {
-//             console.log('Axios:: ', error);
-//         }
-//     })
-//     .catch((error) => {
-//         console.log('CloudStorage:: ', error);
-//     })
-//     return responseData;
-// }
-
 // Query - Get
 export async function GetDynamicHomePages(useSnapshot) {
     const itemData = [];
@@ -151,11 +132,18 @@ export async function AddMenuItem(metaData) {
     // Read Document
     const pageData = pageSnap.data().pageContent;
 
+    // Upload image and get it's download URL
+    const message = metaData.image;
+    const storageRef = ref(cloudStorage, `dishes/${metaData.itemName}`);
+    const imageURL = await uploadString(storageRef, message, 'data_url').then((snapshot) => {
+        return getDownloadURL(storageRef);
+    })
+
     const newItem = {
         name: metaData.itemName,
         ingredients: metaData.itemDescription,
-        image: '',
-        price: 0
+        image: imageURL,
+        price: metaData.price,
     }
 
     // Add to Pages
@@ -415,7 +403,7 @@ const ResetHomepage = async() => {
 }
 
 // Query - Set
-export async function FactoryReset(metaData) {
+export function FactoryReset(metaData) {
     const promiseList = [];
 
     if(metaData.resetMenu){
@@ -425,5 +413,5 @@ export async function FactoryReset(metaData) {
         promiseList.push(ResetHomepage);
     }
     
-    await Promise.all([promiseList.forEach((f) => f())]);
+    Promise.all([promiseList.forEach((f) => f())]);
 }

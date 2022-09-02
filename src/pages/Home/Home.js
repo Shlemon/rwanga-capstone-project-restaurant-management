@@ -95,7 +95,6 @@ const Home = () => {
     // for aesthetic reasons.
     // All subsequent cards must be dynamic and functional
     const storiesData = useSelector((state) => state.homePages.pages);
-    console.log('Stories data: ', storiesData);
     return(
         <React.Fragment>
             <Container fluid id='main-home-page'>

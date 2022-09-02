@@ -27,6 +27,8 @@ export default function MenuAdd() {
                     isChecked: false,
                     itemName: '',
                     itemDescription: '',
+                    price: '',
+                    image: null,
                 }}
                 validationSchema={Yup.object({
                     createItemIn: Yup.string().required('Required'),
@@ -34,6 +36,8 @@ export default function MenuAdd() {
                     isChecked: Yup.bool().required('Required'),
                     itemName: Yup.string().required('Required'),
                     itemDescription: Yup.string().required('Required'),
+                    price: Yup.string().required('Required'),
+                    image: Yup.string().required('Required'),
                 })}
                 onSubmit={(values, { setSubmitting }) => {
                     setTimeout(() => {
@@ -75,6 +79,26 @@ export default function MenuAdd() {
                             name: 'itemDescription',
                             title: 'Item Description',
                             injection: (<Field as='textarea' name='itemDescription' id='field-width'/>)
+                        }}/>
+                        <ColumnStructure cdata={{
+                            name: 'price',
+                            title: 'Item Price',
+                            injection: (<Field as='input' name='price' id='field-width'/>)
+                        }}/>
+                        <ColumnStructure cdata={{
+                            name: 'image',
+                            title: 'Choose Image',
+                            injection: (<input type='file' name='image' id='field-width'
+                                               onChange={(event) => {
+                                                const fileReader = new FileReader();
+                                                fileReader.onload = () => {
+                                                    if(fileReader.readyState === 2){
+                                                        formik.setFieldValue('image', fileReader.result);
+                                                    }
+                                                }
+                                                fileReader.readAsDataURL(event.target.files[0]);
+                                               }}
+                                        />)
                         }}/>
                         <Row><Col md={12} className='d-flex justify-content-center'><button type='submit' className='btn-42'>Save Changes</button></Col></Row>
                     </Form>

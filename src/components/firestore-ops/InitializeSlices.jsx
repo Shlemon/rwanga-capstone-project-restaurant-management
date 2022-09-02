@@ -13,7 +13,6 @@ export default async function InitializeSlices()
     const dispatch = useDispatch();
     await Promise.all([GetDynamicMenuPages(), GetMainPages(), GetDynamicHomePages()])
     .then((result) => {
-        console.log('Result[2]: ', result[2]);
         
         dispatch(updatePages(result[0][0]));
         dispatch(updateRoutes(result[0][1]));
