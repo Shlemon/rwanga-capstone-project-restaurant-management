@@ -10,13 +10,13 @@ const NavLinks = () =>
     return(
         <React.Fragment>
             <Col sm={4} id='footer-3-tabs'>
-                <Link to='/' id='nav-links'>First</Link>
+                <Link to='/' id='nav-links'>Home</Link>
             </Col>
             <Col sm={4} id='footer-3-tabs'>
-                <Link to='/' id='nav-links'>Second</Link>
+                <Link to='/mainmenu' id='nav-links'>Menu</Link>
             </Col>
             <Col sm={4} id='footer-3-tabs'>
-                <Link to='/' id='nav-links'>Third</Link>
+                <Link to='/contact' id='nav-links'>Contact Us</Link>
             </Col>
         </React.Fragment>
     );
